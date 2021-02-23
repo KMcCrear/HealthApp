@@ -1,14 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 
 export default function Landing() {
 	const location = useLocation();
 
 	const stringName = JSON.stringify(location.state);
 	const user = JSON.parse(stringName);
-	console.log(user.name);
 
 	return (
 		<div className="Container">

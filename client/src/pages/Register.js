@@ -3,7 +3,7 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 
 function Register() {
 	const [showLinks, setShowLinks] = useState(false);

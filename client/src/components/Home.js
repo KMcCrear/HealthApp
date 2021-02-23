@@ -3,6 +3,8 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 
+import NavBar from "./NavBar";
+
 function Home() {
 	const history = useHistory();
 
@@ -27,8 +29,8 @@ function Home() {
 						" " +
 						response.data[0].surname
 				);
-				if (response.data[0].role == "user") {
-					history.push("/test");
+				if (response.data[0].role == "admin") {
+					history.push("/landing", { name: response.data[0].firstname });
 				}
 			}
 		});
@@ -36,19 +38,8 @@ function Home() {
 
 	return (
 		<div className="Container">
-			<div className="Navbar">
-				<div className="leftSide">
-					<div className="links" id={showLinks ? "hidden" : ""}>
-						<a href="/Home.js">Home</a>
-						<a href="/Profile">Profile</a>
-						<a href="/aboutus">About us</a>
-						<a href="/contact">Contact</a>
-					</div>
-					<button onClick={() => setShowLinks(!showLinks)}>
-						<ReorderIcon />
-					</button>
-				</div>
-				<div className="rightSide"></div>
+			<div>
+				<NavBar />
 			</div>
 			<div className="content">
 				<div className="header">

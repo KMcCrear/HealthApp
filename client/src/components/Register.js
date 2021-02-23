@@ -3,6 +3,8 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 
+import NavBar from "./NavBar";
+
 function Register() {
 	const [showLinks, setShowLinks] = useState(false);
 
@@ -34,19 +36,8 @@ function Register() {
 
 	return (
 		<div className="Container">
-			<div className="Navbar">
-				<div className="leftSide">
-					<div className="links" id={showLinks ? "hidden" : ""}>
-						<a href="/">Home</a>
-						<a href="/Profile">Profile</a>
-						<a href="/aboutus">About us</a>
-						<a href="/contact">Contact</a>
-					</div>
-					<button onClick={() => setShowLinks(!showLinks)}>
-						<ReorderIcon />
-					</button>
-				</div>
-				<div className="rightSide"></div>
+			<div>
+				<NavBar />
 			</div>
 			<div className="content">
 				<div className="login">

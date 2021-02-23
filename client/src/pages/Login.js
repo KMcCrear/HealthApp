@@ -3,7 +3,7 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 
 function Home() {
 	const history = useHistory();

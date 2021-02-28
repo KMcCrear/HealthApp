@@ -2,10 +2,10 @@ import { React, useState } from "react";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import {Button } from 'antd';
+import {CaretLeftOutlined } from '@ant-design/icons';
 
-import NavBar from "../components/NavBar";
-
-function Register() {
+const  Register = () => {
 	const [showLinks, setShowLinks] = useState(false);
 
 	const [firstNameReg, setFirstNameReg] = useState("");
@@ -16,7 +16,7 @@ function Register() {
 	const [registerStatus, setRegisterStatus] = useState("");
 
 	const registerUser = () => {
-		if (emailReg == null || emailReg == "") {
+		if (emailReg == null || emailReg === "") {
 			alert("Please fill in the fields");
 		} else {
 			Axios.post("http://localhost:3001/register", {
@@ -36,9 +36,7 @@ function Register() {
 
 	return (
 		<div className="Container">
-			<div>
-				<NavBar />
-			</div>
+			<Button icon={<CaretLeftOutlined />}/>
 			<div className="content">
 				<div className="login">
 					<div className="loginContainer">

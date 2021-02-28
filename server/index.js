@@ -8,15 +8,19 @@ const saltRounds = 10;
 
 const app = express();
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
 app.use(express.json());
 app.use(cors());
-
 const db = mysql.createConnection({
-	user: "root",
+	user: "healthapp",
 	host: "localhost",
-	password: "",
-	database: "HealthApp",
-});
+	password: "password",
+	database: "healthapp",
+})
 
 app.post("/register", (req, res) => {
 	const firstname = req.body.firstname;
@@ -24,7 +28,7 @@ app.post("/register", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
-	bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+	bcrypt.hash(password, saltRounds, (err, hash) => {
 		if (err) {
 			console.log(err);
 		}
@@ -47,6 +51,7 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
 	const password = req.body.password;
 	const email = req.body.email;
+	console.log('response is ', res)
 
 	db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
 		if (err) {
@@ -55,6 +60,8 @@ app.post("/login", (req, res) => {
 			if (result.length > 0) {
 				bcrypt.compare(password, result[0].password, (error, response) => {
 					if (response) {
+
+						result.data.message = 'success';
 						res.send(result);
 					} else {
 						res.send({ message: "Wrong Email/Password" });

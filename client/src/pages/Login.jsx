@@ -13,7 +13,7 @@ const Login = (props) =>{
 	const [password, setPassword] = useState(null);
 	const [loginStatus, setLoginStatus] = useState("");
 	const [registerClicked, setRegisterClicked] = useState(false);
-	setState({email:'email is changed haha'});
+	// setState({email:'email is changed haha'});
 	const login = () => {
 		if(!state.email  || !password){
 			setLoginStatus('Please enter your email and password!');
@@ -36,6 +36,7 @@ const Login = (props) =>{
 		});
 	};
 	console.log('logged in is ', state.loggedIn)
+	console.log('state in logged in is',state);
 	if(registerClicked){
 		return(<Register state={state} setState={setState}/>)
 	}

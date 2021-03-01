@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(
 	cors({
-		origin: ["https://localhost:3000"],
+		origin: ["http://localhost:3000"],
 		methods: ["GET", "POST"],
 		credentials: true,
 	})
@@ -67,6 +67,14 @@ app.post("/register", (req, res) => {
 			}
 		);
 	});
+});
+
+app.get("/login", (req, res) => {
+	if (req.session.user) {
+		res.send({ loggedIn: true, user: req.session.user });
+	} else {
+		res.send({ loggedIn: false });
+	}
 });
 
 app.post("/login", (req, res) => {

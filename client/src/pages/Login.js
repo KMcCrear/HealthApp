@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ReorderIcon from "@material-ui/icons/Reorder";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 
@@ -8,12 +7,12 @@ import NavBar from "../components/NavBar";
 function Home() {
 	const history = useHistory();
 
-	const [showLinks, setShowLinks] = useState(false);
-
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const [loginStatus, setLoginStatus] = useState("");
+
+	Axios.defaults.withCredentials = true;
 
 	const login = () => {
 		Axios.post("http://localhost:3001/login", {
@@ -35,6 +34,14 @@ function Home() {
 			}
 		});
 	};
+
+	useEffect(() => {
+		Axios.get("http://localhost:3001/login").then((response) => {
+			if (response.data.login) {
+				setLoginStatus(response.date[0].firstname);
+			}
+		});
+	}, []);
 
 	return (
 		<div className="Container">

@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
 const bcrypt = require("bcrypt");
+const { default: axios } = require("axios");
 const saltRounds = 10;
 
 const serverPort = 3001;
@@ -116,5 +117,5 @@ app.post("/login", (req, res) => {
 });
 
 app.listen(serverPort, () => {
-	console.log("Server running on port {}");
+	console.log(`Server running on port: ${serverPort}`);
 });

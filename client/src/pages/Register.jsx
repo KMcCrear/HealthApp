@@ -4,10 +4,11 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import {Button } from 'antd';
 import {CaretLeftOutlined } from '@ant-design/icons';
+import Login from './Login';
 
-const  Register = () => {
+const  Register = (props) => {
 	const [showLinks, setShowLinks] = useState(false);
-
+	const {state, onUpdate, setRegisterClicked} = props;
 	const [firstNameReg, setFirstNameReg] = useState("");
 	const [surNameReg, setSurNameReg] = useState("");
 	const [emailReg, setEmailReg] = useState("");
@@ -33,13 +34,15 @@ const  Register = () => {
 			});
 		}
 	};
-
+	
 	return (
 		<div className="Container">
-			<Button icon={<CaretLeftOutlined />}/>
 			<div className="content">
 				<div className="login">
+
 					<div className="loginContainer">
+						<Button icon={<CaretLeftOutlined />} onClick={()=>{setRegisterClicked(false)}}/>
+
 						<label>First Name</label>
 						<input
 							type="text"

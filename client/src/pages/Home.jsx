@@ -8,7 +8,7 @@ class Home extends React.Component {
 	// the state should be populated with the users info
 	constructor(props){
 		super(props);
-		this.defaultState= {
+		this.state= {
 			loggedIn: false,
 			username: null,
 			email: null,
@@ -16,29 +16,16 @@ class Home extends React.Component {
 			surname: null,
 			message: null,
 		}
-
-		this.state ={
-			state: _.cloneDeep(this.defaultState),
-		}
-		this.updateState = this.updateState.bind(this)
+		const onUpdate = this.onUpdate.bind(this);
 	}
-	updateState(object){
-		this.setState((prevState) => {
-			const newState = _.cloneDeep(prevState);
-	  
-			_.merge(newState.config, object);
-	  
-			return newState;
-		  });
+	onUpdate(object){
+		console.log('in on update', object)
+		this.setState(object);
 	}
 	render(){		
-		const {state}=this.state;
-		console.log('state is ', state);
 
-		this.updateState({email:'can you be changed pls'});
-		console.log('state is ', state);
 		if(!this.state.loggedIn) {
-			return (<Login state={state} updateState={this.updateState}/>)
+			return (<Login state={this.state} onUpdate={this.onUpdate.bind(this)}/>)
 		}
 		else {
 			return (
@@ -46,7 +33,7 @@ class Home extends React.Component {
 			<div className="Container">
 				<div className="landingContainer">
 					<div className="leftsideHeading">
-						<h3>Welcome {state.username}</h3>
+						<h3>Welcome {this.state.username}</h3>
 					</div>
 					<div className="excerciseActivities">
 						<div className="activity">

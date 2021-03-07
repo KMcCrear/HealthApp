@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
@@ -7,13 +7,13 @@ import {Button, Typography} from 'antd';
 const {Title} = Typography;
 
 const Login = (props) =>{
-	const {state, setState } = props;
+	const {state, onUpdate } = props;
 	const history = useHistory();
 
 	const [password, setPassword] = useState(null);
 	const [loginStatus, setLoginStatus] = useState("");
 	const [registerClicked, setRegisterClicked] = useState(false);
-	// setState({email:'email is changed haha'});
+
 	const login = () => {
 		if(!state.email  || !password){
 			setLoginStatus('Please enter your email and password!');
@@ -25,7 +25,7 @@ const Login = (props) =>{
 		}).then((response) => {
 			console.log('response message was ', response)
 			if(response.data.message === 'success'){
-				setState({loggedIn: true});
+				onUpdate({loggedIn: true});
 				if (response.data[0].role === "admin") {
 					history.push("/landing", { name: response.data[0].firstname });
 				}
@@ -35,10 +35,13 @@ const Login = (props) =>{
 			} 
 		});
 	};
-	console.log('logged in is ', state.loggedIn)
-	console.log('state in logged in is',state);
+
 	if(registerClicked){
-		return(<Register state={state} setState={setState}/>)
+		return(<Register 
+			state={state} 
+			onUpdate={onUpdate}
+			setRegisterClicked={setRegisterClicked}
+			/>)
 	}
 	return (
 		<div className="Container">
@@ -54,7 +57,7 @@ const Login = (props) =>{
 						<input
 							type="email"
 							onChange={(e) => {
-								setState({email: e.target.value});
+								onUpdate({email: e.target.value});
 							}}
 						/>
 						<label>Password</label>
@@ -69,7 +72,7 @@ const Login = (props) =>{
 							<Title level={3}>
 								Don't have an account?
 							</Title>
-							<Button onClick={setRegisterClicked(true)}>Register</Button>
+							<Button onClick={()=>{setRegisterClicked(true);}}>Register</Button>
 							<Title level={3} type='secondary' id="loginStatus">{loginStatus}</Title>
 						</div>
 					</div>

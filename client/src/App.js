@@ -12,7 +12,7 @@ function App() {
 		<div className='App'>
 		<NavBar/>
 		<Router>
-			<Route path="/" exact render={()=><Test/>} />
+			<Route path="/" exact render={()=><Home/>} />
 			<Route path="/register" render={()=><Register/>} />
 		</Router>
 		</div>

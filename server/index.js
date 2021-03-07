@@ -19,7 +19,7 @@ const db = mysql.createConnection({
 	user: "healthapp",
 	host: "localhost",
 	password: "password",
-	database: "healthapp",
+	database: "HealthApp",
 })
 
 app.post("/register", (req, res) => {
@@ -60,8 +60,6 @@ app.post("/login", (req, res) => {
 			if (result.length > 0) {
 				bcrypt.compare(password, result[0].password, (error, response) => {
 					if (response) {
-
-						result.data.message = 'success';
 						res.send(result);
 					} else {
 						res.send({ message: "Wrong Email/Password" });

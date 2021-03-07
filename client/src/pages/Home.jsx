@@ -10,19 +10,18 @@ class Home extends React.Component {
 		super(props);
 		this.state= {
 			loggedIn: false,
-			username: null,
 			email: null,
 			firstname: null,
 			surname: null,
 			message: null,
 		}
-		const onUpdate = this.onUpdate.bind(this);
 	}
 	onUpdate(object){
 		console.log('in on update', object)
 		this.setState(object);
 	}
 	render(){		
+		console.log('state is ', this.state)
 
 		if(!this.state.loggedIn) {
 			return (<Login state={this.state} onUpdate={this.onUpdate.bind(this)}/>)
@@ -33,7 +32,7 @@ class Home extends React.Component {
 			<div className="Container">
 				<div className="landingContainer">
 					<div className="leftsideHeading">
-						<h3>Welcome {this.state.username}</h3>
+						<h3>Welcome {this.state.firstname}</h3>
 					</div>
 					<div className="excerciseActivities">
 						<div className="activity">

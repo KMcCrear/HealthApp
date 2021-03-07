@@ -4,6 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 import Register from './Register';
 import {Button, Typography} from 'antd';
+import populateState from '../helpers/populateState';
+
 const {Title} = Typography;
 
 const Login = (props) =>{
@@ -24,8 +26,9 @@ const Login = (props) =>{
 			password: password,
 		}).then((response) => {
 			console.log('response message was ', response)
-			if(response.data.message === 'success'){
+			if(!response.data.message){
 				onUpdate({loggedIn: true});
+				populateState(onUpdate, response.data[0])
 				if (response.data[0].role === "admin") {
 					history.push("/landing", { name: response.data[0].firstname });
 				}

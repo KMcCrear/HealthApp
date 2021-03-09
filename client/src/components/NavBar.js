@@ -13,6 +13,7 @@ export default function NavBar() {
 						<a href="/Profile">Profile</a>
 						<a href="/aboutus">About us</a>
 						<a href="/contact">Contact</a>
+						<a href="/covidtracker">Covid-19 Tracker</a>
 					</div>
 					<button onClick={() => setShowLinks(!showLinks)}>
 						<ReorderIcon />

@@ -9,7 +9,6 @@ function Home() {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
 	const [loginStatus, setLoginStatus] = useState("");
 
 	// Sets the credentials to true - needed to be set *DONT REMOVE*

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import NavBar from "../components/NavBar";
 
 export default function CovidTracker() {
 	const [covidDate, setDate] = useState();
@@ -31,64 +32,38 @@ export default function CovidTracker() {
 
 	return (
 		<div>
+			<nav>
+				<NavBar />
+			</nav>
 			<div className="Container">
-				<header>
-					<h1>Coronavirus Tracking</h1>
-					<h3>
-						View Rates if new infection, deaths and overall impact of the virus
-						in the UK
-					</h3>
-				</header>
-				<div className="locationInput">
-					<input
-						type="text"
-						placeholder="location..."
-						onChange={(e) => {
-							setLocation(e.target.value);
-						}}
-					/>
-					<button onClick={getData}>Click</button>
-				</div>
-				<div className="loadedData">
-					<form>
-						<label>Date: </label>
-						<p>{covidDate}</p>
-						<label>New Cases: </label>
-						<p>{newCases}</p>
-					</form>
-				</div>
-			</div>
-			{/* <div className="Container">
-				<div>
-					<header className="covidHeader">
+				<div className="covidData">
+					<header>
 						<h1>Coronavirus Tracking</h1>
 						<h3>
 							View Rates if new infection, deaths and overall impact of the
 							virus in the UK
 						</h3>
 					</header>
-				</div>
-				<div className="locationInput">
-					<form>
+					<div className="locationInput">
 						<input
 							type="text"
-							placeholder="Location..."
+							placeholder="location..."
 							onChange={(e) => {
 								setLocation(e.target.value);
 							}}
 						/>
-						<button onClick={getData}>Search</button>
-					</form>
+						<button onClick={getData}>Click</button>
+					</div>
+					<div className="loadedData">
+						<form>
+							<label>Date: </label>
+							<p>{covidDate}</p>
+							<label>New Cases: </label>
+							<p>{newCases}</p>
+						</form>
+					</div>
 				</div>
-				<div className="loadCovidData">
-					<form>
-						<label>Date: </label>
-						<p>{covidDate}</p>
-						<label>New Cases: </label>
-						<p>{newCases}</p>
-					</form>
-				</div>
-			</div> */}
+			</div>
 		</div>
 	);
 }

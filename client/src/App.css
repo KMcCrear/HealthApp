@@ -235,3 +235,39 @@ button:hover {
 		rgba(240, 241, 245, 0.9) 100%
 	);
 }
+
+.covidData {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.covidContainer header {
+	margin-bottom: 20px;
+	align-content: center;
+}
+
+.locationInput {
+	margin-bottom: 30px;
+}
+
+.locationInput input {
+	width: 300px;
+	height: 30px;
+}
+
+.locationInput input:focus {
+	outline: none;
+}
+
+.locationInput button {
+	height: 37px;
+	width: 70px;
+}
+
+.loadedData {
+	display: flex;
+	flex-direction: row;
+}

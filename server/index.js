@@ -13,6 +13,11 @@ const serverPort = 3001;
 
 const app = express();
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
 app.use(express.json());
 
 /*sets the methods that will be used and the port the app is running on
@@ -47,11 +52,11 @@ app.use(
 );
 
 const db = mysql.createConnection({
-	user: "root",
+	user: "healthapp",
 	host: "localhost",
-	password: "",
+	password: "password",
 	database: "HealthApp",
-});
+})
 
 app.post("/register", (req, res) => {
 	const firstname = req.body.firstname;
@@ -59,7 +64,7 @@ app.post("/register", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
-	bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+	bcrypt.hash(password, saltRounds, (err, hash) => {
 		if (err) {
 			console.log(err);
 		}
@@ -83,6 +88,7 @@ app.post("/register", (req, res) => {
 sends info on if the user is logged in to the front end.*/
 
 app.get("/login", (req, res) => {
+	console.log('******************************req session user in cookies ****************************** ', req.session.user);
 	if (req.session.user) {
 		res.send({ loggedIn: true, user: req.session.user });
 	} else {
@@ -91,8 +97,10 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+
 	const password = req.body.password;
 	const email = req.body.email;
+	console.log('response is ', res)
 
 	db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
 		if (err) {
@@ -102,7 +110,8 @@ app.post("/login", (req, res) => {
 				bcrypt.compare(password, result[0].password, (error, response) => {
 					if (response) {
 						req.session.user = result;
-						console.log(req.session.user);
+						console.log('******************************req session user in logging in ****************************** ', req.session.user);
+
 						res.send(result);
 					} else {
 						res.send({ message: "Wrong Email/Password" });

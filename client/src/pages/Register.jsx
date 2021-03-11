@@ -2,23 +2,27 @@ import { React, useState } from "react";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import {Button } from 'antd';
+import {CaretLeftOutlined } from '@ant-design/icons';
+import Login from './Login';
+import populateState from '../helpers/populateState';
 
-import NavBar from "../components/NavBar";
-
-function Register() {
+const  Register = (props) => {
 	const [showLinks, setShowLinks] = useState(false);
-
-	const [firstNameReg, setFirstNameReg] = useState("");
-	const [surNameReg, setSurNameReg] = useState("");
-	const [emailReg, setEmailReg] = useState("");
-	const [passwordReg, setPasswordReg] = useState("");
-	const [passwordTwoReg, setPasswordTwoReg] = useState("");
-	const [registerStatus, setRegisterStatus] = useState("");
+	const {state, onUpdate, setRegisterClicked} = props;
+	const [firstNameReg, setFirstNameReg] = useState(null);
+	const [surNameReg, setSurNameReg] = useState(null);
+	const [emailReg, setEmailReg] = useState(null);
+	const [passwordReg, setPasswordReg] = useState(null);
+	const [passwordTwoReg, setPasswordTwoReg] = useState(null);
+	const [registerStatus, setRegisterStatus] = useState(null);
 
 	const registerUser = () => {
-		if (emailReg == null || emailReg == "") {
-			alert("Please fill in the fields");
-		} else {
+		if (!firstNameReg || !surNameReg || !emailReg || !passwordReg || !passwordTwoReg) {
+			alert("Please fill in the fields!");
+		} else if(passwordReg!==passwordTwoReg){
+			alert("Passwords don't match!")
+		}else {
 			Axios.post("http://localhost:3001/register", {
 				firstname: firstNameReg,
 				surname: surNameReg,
@@ -29,19 +33,21 @@ function Register() {
 					setRegisterStatus(response.data.message);
 				} else {
 					setRegisterStatus("Welcome Registration Successful");
+					console.log('response is ', response)
+					onUpdate({email: emailReg, firstname: firstNameReg, surname: surNameReg, loggedIn: true})
 				}
 			});
 		}
 	};
-
+	
 	return (
 		<div className="Container">
-			<div>
-				<NavBar />
-			</div>
 			<div className="content">
 				<div className="login">
+
 					<div className="loginContainer">
+						<Button icon={<CaretLeftOutlined />} onClick={()=>{setRegisterClicked(false)}}/>
+
 						<label>First Name</label>
 						<input
 							type="text"

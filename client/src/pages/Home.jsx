@@ -3,7 +3,7 @@ import Login from './Login';
 import _ from 'lodash'; 
 import {useHistory } from "react-router-dom";
 import Axios from "axios";
-
+import populateState  from '../helpers/populateState'
 
 const Home=(props)=> {
 	// here we should check if the user is already logged in
@@ -12,19 +12,18 @@ const Home=(props)=> {
 	const {onUpdate, state} = props;
 	const history = useHistory();
 	const [loginStatus, setLoginStatus] =useState(null);
+	Axios.defaults.withCredentials = true;
 
 	useEffect(() => {
         Axios.get("http://localhost:3001/login").then((response) => {
-			console.log('response was ', response);
+			console.log('response was ', response.data);
             if (response.data.loggedIn == true) {
-				console.log('logged in')
+				onUpdate({loggedIn: true});
                 setLoginStatus(response.data.user[0].firstname);
-                history.push("/landing", { name: response.data.user[0].firstname });
+				populateState(onUpdate, response.data.user[0]);
             }
         });
     }, []);
-
-		console.log('state is ', state)
 
 	if(!state.loggedIn) {
 		return (<Login state={state} onUpdate={onUpdate}/>)

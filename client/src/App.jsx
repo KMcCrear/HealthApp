@@ -19,10 +19,10 @@ class App extends React.Component {
 		}
 	}
 	onUpdate(object){
-		console.log('in on update', object)
 		this.setState(object);
 	}
 	render(){
+	console.log('state is ', this.state)
 	return (
 		<>
 		<div className='App'>

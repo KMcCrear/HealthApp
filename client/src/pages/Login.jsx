@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
@@ -15,7 +15,16 @@ const Login = (props) =>{
 	const [password, setPassword] = useState(null);
 	const [loginStatus, setLoginStatus] = useState("");
 	const [registerClicked, setRegisterClicked] = useState(false);
-
+    // useEffect(() => {
+	// 	console.log('checking login status');
+    //     Axios.get("http://localhost:3001/login").then((response) => {
+	// 		console.log('logged in response was ', response)
+    //         if (response.data.loggedIn == true) {
+    //             setLoginStatus(response.data.user[0].firstname);
+    //             history.push("/landing", { name: response.data.user[0].firstname });
+    //         }
+    //     });
+    // }, []);
 	const login = () => {
 		if(!state.email  || !password){
 			setLoginStatus('Please enter your email and password!');

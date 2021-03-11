@@ -2,9 +2,14 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
 
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+
 const bcrypt = require("bcrypt");
-const { response } = require("express");
 const saltRounds = 10;
+
+const serverPort = 3001;
 
 const app = express();
 
@@ -14,7 +19,38 @@ app.use(function(req, res, next) {
 	next();
   });
 app.use(express.json());
-app.use(cors());
+
+/*sets the methods that will be used and the port the app is running on
+credentials need to be set to true for the cookie to work, needs to be
+set on the front-end too.
+*/
+app.use(
+	cors({
+		origin: ["http://localhost:3000"],
+		methods: ["GET", "POST"],
+		credentials: true,
+	})
+);
+
+//allows the app to use cookies
+app.use(cookieParser());
+//Not sure what this does but the docs say it needs to be set to true.
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/*This sets up the session the cookie uses
+a key and a secret need to be set*/
+app.use(
+	session({
+		key: "userId",
+		secret: "cookieSecret",
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			expires: 60 * 60 * 24,
+		},
+	})
+);
+
 const db = mysql.createConnection({
 	user: "healthapp",
 	host: "localhost",
@@ -48,6 +84,17 @@ app.post("/register", (req, res) => {
 	});
 });
 
+/*This is a GET method, checks to see if the use is logged in
+sends info on if the user is logged in to the front end.*/
+
+app.get("/login", (req, res) => {
+	if (req.session.user) {
+		res.send({ loggedIn: true, user: req.session.user });
+	} else {
+		res.send({ loggedIn: false });
+	}
+});
+
 app.post("/login", (req, res) => {
 	const password = req.body.password;
 	const email = req.body.email;
@@ -60,6 +107,8 @@ app.post("/login", (req, res) => {
 			if (result.length > 0) {
 				bcrypt.compare(password, result[0].password, (error, response) => {
 					if (response) {
+						req.session.user = result;
+						console.log(req.session.user);
 						res.send(result);
 					} else {
 						res.send({ message: "Wrong Email/Password" });
@@ -72,6 +121,6 @@ app.post("/login", (req, res) => {
 	});
 });
 
-app.listen(3001, () => {
-	console.log("Server running on port 3001");
+app.listen(serverPort, () => {
+	console.log("Server running on port {}");
 });

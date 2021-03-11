@@ -33,8 +33,8 @@ const  Register = (props) => {
 					setRegisterStatus(response.data.message);
 				} else {
 					setRegisterStatus("Welcome Registration Successful");
-					populateState(onUpdate, response.data[0]);
-					onUpdate({loggedIn:true});
+					console.log('response is ', response)
+					onUpdate({email: emailReg, firstname: firstNameReg, surname: surNameReg, loggedIn: true})
 				}
 			});
 		}

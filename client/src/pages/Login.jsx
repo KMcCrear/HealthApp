@@ -15,7 +15,7 @@ const Login = (props) =>{
 	const [password, setPassword] = useState(null);
 	const [loginStatus, setLoginStatus] = useState("");
 	const [registerClicked, setRegisterClicked] = useState(false);
-
+	
 	const login = () => {
 		if(!state.email  || !password){
 			setLoginStatus('Please enter your email and password!');
@@ -71,11 +71,11 @@ const Login = (props) =>{
 							}}
 						/>
 						<div className="buttonContainer">
-							<Button onClick={login}>Login</Button>
-							<Title level={3}>
+							<button onClick={login}>Login</button>
+							<Title level={4}>
 								Don't have an account?
 							</Title>
-							<Button onClick={()=>{setRegisterClicked(true);}}>Register</Button>
+							<button onClick={()=>{setRegisterClicked(true);}}>Register</button>
 							<Title level={3} type='secondary' id="loginStatus">{loginStatus}</Title>
 						</div>
 					</div>

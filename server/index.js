@@ -77,6 +77,7 @@ app.post("/register", (req, res) => {
 					console.log(err);
 					res.send({ message: "Registration unsuccessful" });
 				} else {
+					req.session.user = result;
 					res.send(result);
 				}
 			}
@@ -88,7 +89,6 @@ app.post("/register", (req, res) => {
 sends info on if the user is logged in to the front end.*/
 
 app.get("/login", (req, res) => {
-	console.log('******************************req session user in cookies ****************************** ', req.session.user);
 	if (req.session.user) {
 		res.send({ loggedIn: true, user: req.session.user });
 	} else {
@@ -110,8 +110,6 @@ app.post("/login", (req, res) => {
 				bcrypt.compare(password, result[0].password, (error, response) => {
 					if (response) {
 						req.session.user = result;
-						console.log('******************************req session user in logging in ****************************** ', req.session.user);
-
 						res.send(result);
 					} else {
 						res.send({ message: "Wrong Email/Password" });

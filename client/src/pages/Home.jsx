@@ -1,56 +1,94 @@
-import React, {useEffect, useState} from "react";
-import Login from './Login';
-import _ from 'lodash'; 
-import {useHistory } from "react-router-dom";
-import Axios from "axios";
-import populateState  from '../helpers/populateState'
+import "antd/dist/antd.css";
 
+import React from "react";
+import {Row, Col, Table, Space} from 'antd';
+import { EditFilled } from "@ant-design/icons";
 const Home=(props)=> {
-	// here we should check if the user is already logged in
-	// if they are - loggedIn should be set to true so that login doesn't render
-	// the state should be populated with the users info
+
 	const {onUpdate, state} = props;
-	const history = useHistory();
-	const [loginStatus, setLoginStatus] =useState(null);
-	Axios.defaults.withCredentials = true;
 
-	useEffect(() => {
-        Axios.get("http://localhost:3001/login").then((response) => {
-			console.log('response was ', response.data);
-            if (response.data.loggedIn == true) {
-				onUpdate({loggedIn: true});
-                setLoginStatus(response.data.user[0].firstname);
-				populateState(onUpdate, response.data.user[0]);
-            }
-        });
-    }, []);
 
-	if(!state.loggedIn) {
-		return (<Login state={state} onUpdate={onUpdate}/>)
+	const tableColumns = [
+		{
+			title: 'Information',
+			dataIndex: 'info',
+			key: 'info',
+		},
+		{
+			title: 'Time',
+			dataIndex: 'time',
+			key:'time',
+		},
+		{
+			title:'Date',
+			dataIndex: 'date',
+			key:'date',
+		},
+		{
+			title:'Action',
+			key:'action',
+			render: (text)=>(
+				<Space>
+				<button onClick={()=>editRow(text)}>Edit</button>
+				<button onClick={()=>deleteRow(text)}>Delete</button>
+				</Space>
+			)
+		}
+	]
+
+	const tableData = [
+		{
+			key: '0',
+			info: 'Go to the doctors appointment',
+			time: '11pm',
+		},
+		{
+			key: '1',
+			info: 'Testing this table',
+			time: '5am',
+		}
+	]
+	const deleteRow = (key)=>{
+		// this is working it just doesn't rerender the component atm
+		// we need to add it as a table in mysql 
+		console.log('key is', key);
+		const index = tableData.indexOf(key);
+		if (index > -1) {
+			tableData.splice(index, 1);
+		  }
+		console.log('table data is ', tableData);
+
 	}
-	else {
-		return (
-		<>
-		<div className="Container">
-			<div className="landingContainer">
-				<div className="leftsideHeading">
-					<h3>Welcome {loginStatus}</h3>
-				</div>
-				<div className="excerciseActivities">
-					<div className="activity">
-						<div>
-							<button>Activity 1</button>
-						</div>
-						<div>
-							<button>Activity 2</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</>
-		);
+	const editRow = (text, record) =>{
+		console.log('text and record are ', text, record);
 	}
+
+	return(
+		// <div className="Container">
+		// 	<div className="landingContainer">
+		// 		<div className="leftsideHeading">
+		// 			<h3>{state.message}</h3>
+		// 		</div>
+		// 		<div className="excerciseActivities">
+		// 			<div className="activity">
+		// 				<div>
+		// 					<button>Activity 1</button>
+		// 				</div>
+		// 				<div>
+		// 					<button>Activity 2</button>
+		// 				</div>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// </div>
+		<Row>
+			<Col span={10}>
+				<Table dataSource={tableData} columns={tableColumns} pagination={false}/>
+				</Col>
+
+		</Row>
+	);
+	
 }
 export default Home;
  

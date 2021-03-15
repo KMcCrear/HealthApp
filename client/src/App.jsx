@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import CovidTracker from "./pages/CovidTracker";
 import Activities from "./pages/Activities";
+import Activity from "./pages/Activity";
 
 class App extends React.Component {
 	constructor(props) {
@@ -55,6 +56,7 @@ class App extends React.Component {
 								/>
 							)}
 						/>
+						<Route path="/activity" render={() => <Activity />} />
 					</Router>
 				</div>
 			</>

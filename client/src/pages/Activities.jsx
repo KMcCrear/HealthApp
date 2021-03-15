@@ -1,11 +1,13 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import populateActivity from "../helpers/populateActivity";
 
 const Activites = () => {
 	const [activity, setActivity] = useState(null);
+	const history = useHistory();
 
 	useEffect(() => {
 		Axios.get("http://localhost:3001/loadActivity").then((response) => {
@@ -19,18 +21,26 @@ const Activites = () => {
 	}, []);
 
 	const renderDivs = (renderActiveDivs) => {
-		let something = renderActiveDivs.map(
-			(activity) => (
-				populateActivity(activity.activityName),
-				(
-					<a className="activityLinks" key={activity.id} href="/">
-						{activity.activityName}
-					</a>
-				)
-			)
-		);
+		let activNames = renderActiveDivs.map((activity) => (
+			<a
+				className="activityLinks"
+				key={activity.id}
+				href="/error"
+				onClick={(e) => {
+					passData(e, activity.activityName);
+				}}
+			>
+				{activity.activityName}
+			</a>
+		));
 
-		setActivity(something);
+		setActivity(activNames);
+	};
+
+	const passData = (e, activityName) => {
+		e.preventDefault();
+		console.log(activityName);
+		history.push("/activity", activityName);
 	};
 
 	return (

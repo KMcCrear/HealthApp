@@ -28,8 +28,8 @@ USE HealthApp;
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS`users` (
+  `id` int(11) PRIMARY KEY NOT NULL,
   `firstname` varchar(512) NOT NULL,
   `surname` varchar(512) NOT NULL,
   `email` varchar(512) NOT NULL,
@@ -56,8 +56,6 @@ INSERT INTO `users` (`id`, `firstname`, `surname`, `email`, `password`, `role`) 
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables

@@ -13,11 +13,14 @@ const serverPort = 3001;
 
 const app = express();
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept"
+	);
 	next();
-  });
+});
 app.use(express.json());
 
 /*sets the methods that will be used and the port the app is running on
@@ -52,11 +55,11 @@ app.use(
 );
 
 const db = mysql.createConnection({
-	user: "healthapp",
+	user: "root",
 	host: "localhost",
-	password: "password",
+	password: "",
 	database: "HealthApp",
-})
+});
 
 app.post("/register", (req, res) => {
 	const firstname = req.body.firstname;
@@ -88,7 +91,10 @@ app.post("/register", (req, res) => {
 sends info on if the user is logged in to the front end.*/
 
 app.get("/login", (req, res) => {
-	console.log('******************************req session user in cookies ****************************** ', req.session.user);
+	console.log(
+		"******************************req session user in cookies ****************************** ",
+		req.session.user
+	);
 	if (req.session.user) {
 		res.send({ loggedIn: true, user: req.session.user });
 	} else {
@@ -97,10 +103,9 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-
 	const password = req.body.password;
 	const email = req.body.email;
-	console.log('response is ', res)
+	console.log("response is ", res);
 
 	db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
 		if (err) {
@@ -110,7 +115,10 @@ app.post("/login", (req, res) => {
 				bcrypt.compare(password, result[0].password, (error, response) => {
 					if (response) {
 						req.session.user = result;
-						console.log('******************************req session user in logging in ****************************** ', req.session.user);
+						console.log(
+							"******************************req session user in logging in ****************************** ",
+							req.session.user
+						);
 
 						res.send(result);
 					} else {
@@ -124,6 +132,21 @@ app.post("/login", (req, res) => {
 	});
 });
 
+app.get("/loadActivity", (req, res) => {
+	console.log(res);
+	db.query("SELECT * FROM activities;", (err, result) => {
+		if (err) {
+			res.send({ Error: err });
+		} else {
+			if (result.length > 0) {
+				req.session.activtyName = result;
+				console.log(result);
+				res.send(result);
+			}
+		}
+	});
+});
+
 app.listen(serverPort, () => {
-	console.log("Server running on port {}");
+	console.log(`Server running on port ${serverPort}`);
 });

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import CovidTracker from "./pages/CovidTracker";
+import Activities from "./pages/Activities";
 
 class App extends React.Component {
 	constructor(props) {
@@ -45,6 +46,15 @@ class App extends React.Component {
 							)}
 						/>
 						<Route path="/covidtracking" render={() => <CovidTracker />} />
+						<Route
+							path="/activities"
+							render={() => (
+								<Activities
+								// state={this.state}
+								// onUpdate={this.onUpdate.bind(this)}
+								/>
+							)}
+						/>
 					</Router>
 				</div>
 			</>

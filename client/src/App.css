@@ -235,3 +235,32 @@ button:hover {
 		rgba(240, 241, 245, 0.9) 100%
 	);
 }
+
+.activities .activityDivs {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.activities .activityDivs .activityLinks {
+	border: solid;
+	border-width: 1px;
+	margin-left: 15px;
+	padding: 5px;
+	width: 70px;
+	height: 70px;
+	justify-items: center;
+	align-content: center;
+	color: black;
+	text-decoration: none;
+}
+
+.activities .activityDivs .activityLinks:hover {
+	font-weight: bold;
+	border-width: 5px;
+	height: 100px;
+	width: 130px;
+	font-size: 30px;
+	padding: 10px;
+	margin-left: 30px;
+}

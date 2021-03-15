@@ -40,7 +40,7 @@ const Activites = () => {
 	const passData = (e, activityName) => {
 		e.preventDefault();
 		console.log(activityName);
-		history.push("/activity", activityName);
+		history.push("/workouts", activityName);
 	};
 
 	return (

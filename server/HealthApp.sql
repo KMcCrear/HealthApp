@@ -28,13 +28,33 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `firstname` varchar(512) NOT NULL,
   `surname` varchar(512) NOT NULL,
   `email` varchar(512) NOT NULL,
   `password` varchar(512) NOT NULL,
   `role` varchar(10) NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `profile` (
+  `profileId` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+  `Firstname` varchar(512) NOT NULL,
+  `Surname` varchar(512) NOT NULL,
+  `Email` varchar(512) NOT NULL,
+  `Age` varchar(512),
+  `Sex` varchar(512),
+  `Height` varchar(512),
+  `Weight` varchar(512), 
+  `Blood Type` varchar(512),
+  `Blood Pressure` varchar(512),
+  `Diabetic` varchar(512),
+  `Disabilities` varchar(512),
+  `users_id` int(11) NOT NULL,
+  CONSTRAINT `fk_users_id` 
+  FOREIGN KEY (`users_id`) REFERENCES `users`(`id`)
+  ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
 --
 -- Dumping data for table `users`
@@ -48,6 +68,11 @@ INSERT INTO `users` (`id`, `firstname`, `surname`, `email`, `password`, `role`) 
 (7, 'asdasd', '', '', '$2b$10$y7wXJYCZ6lG5EJQQl0K8HOAi20yA1tePHCMnO1vzZp9UWZSq6pLXm', 'user'),
 (12, 'admin', 'admin', 'admin@gcuhealth.co.uk', '$2b$10$neyGefUfXF.7aKtJvVxDD.Amx1D/lTfsS3X5q9r7gq2xw8y9MoBke', 'admin');
 
+INSERT INTO `profile` (`users_id`, `Firstname`, `Surname`, `Email`)
+SELECT `id`, `firstname`, `surname`, `email`
+FROM `users`;
+
+
 --
 -- Indexes for dumped tables
 --
@@ -55,8 +80,8 @@ INSERT INTO `users` (`id`, `firstname`, `surname`, `email`, `password`, `role`) 
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+
+
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -65,9 +90,9 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-COMMIT;
+
+
+--
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

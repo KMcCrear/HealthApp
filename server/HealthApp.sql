@@ -43,7 +43,8 @@ CREATE TABLE `users` (
 --
 DROP TABLE  IF EXISTS `reminders`;
 CREATE TABLE IF NOT EXISTS `reminders`(
-  `id` int(11) NOT NUll,
+  `id` int(11) NOT NUll AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   `userid` int(11) NOT NULL,
   `info` varchar(512) NOT NULL,
   `date` varchar(20),
@@ -78,8 +79,6 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
-ALTER TABLE `reminders`
-  ADD PRIMARY KEY (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

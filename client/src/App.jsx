@@ -30,7 +30,7 @@ const App = (props) =>{
 		}
         Axios.get(`${endpoint()}/login`).then((response) => {
 			console.log('response was ', response.data);
-            if (response.data.loggedIn == true) {
+            if (response.data.loggedIn === true) {
 				updateOnLogin(onUpdate, response.data.user[0]);
             }
         });

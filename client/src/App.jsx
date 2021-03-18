@@ -7,6 +7,9 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import CovidTracker from "./pages/CovidTracker";
+import Activities from "./pages/Activities";
+import Workouts from "./pages/Workouts";
+
 import Axios from "axios";
 import _ from 'lodash';
 import populateState from './helpers/populateState'
@@ -62,13 +65,39 @@ const App = () =>{
 							state={state}
 							onUpdate={onUpdate}
 						/>
+
+						<Route
+							path="/register"
+							render={() => (
+								<Register
+									state={this.state}
+									onUpdate={this.onUpdate.bind(this)}
+								/>
+							)}
+						/>
+						<Route path="/covidtracking" render={() => <CovidTracker />} />
+						<Route
+							path="/activities"
+							render={() => (
+								<Activities
+								// state={this.state}
+								// onUpdate={this.onUpdate.bind(this)}
+								/>
+							)}
+						/>
+						<Route path="/workouts" render={() => <Workouts />} />
+					</Router>
+				</div>
+			</>
+		);
+	}
 					)}
 				/>
-				<Route path="/covidtracking" render={() => <CovidTracker />} />
 			</Router>
 		</div>
 	);
 	
+
 }
 
 export default App;

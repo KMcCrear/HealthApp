@@ -96,6 +96,33 @@ app.get("/login", (req, res) => {
 	}
 });
 
+app.get('/home/reminders-get', (req, res)=>{
+	const id = req.query.id;
+	db.query(`SELECT * FROM reminders WHERE userid = ${id};`, (err, result)=>{
+		if(err){
+			res.send({err: err});
+		} else {
+			res.send(result)
+		}
+	})
+})
+
+app.post('/home/reminders-add', (req, res)=>{
+	const info = req.body.info;
+	const date = req.body.date;
+	const location = req.body.location;
+	const time = req.body.time;
+	const userid = req.body.userid;
+
+	db.query(`INSERT INTO reminders(userid, info, date, time, location) VALUES(${userid}, ${info}, ${date}, ${time}, ${location})`, (err, result)=>{
+		if(err){
+			console.log(err);
+		} else {
+			res.send(result);
+		}
+	})
+})
+
 app.post("/login", (req, res) => {
 
 	const password = req.body.password;

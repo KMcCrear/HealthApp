@@ -3,7 +3,8 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import {Button } from 'antd';
 import {CaretLeftOutlined } from '@ant-design/icons';
-import populateState from '../helpers/populateState';
+import updateOnLogin from '../helpers/updateOnLogin';
+import endpoint from '../helpers/endPoint';
 
 const  Register = (props) => {
 	const [showLinks, setShowLinks] = useState(false);
@@ -27,13 +28,12 @@ const  Register = (props) => {
 				email: emailReg,
 				password: passwordTwoReg
 			}
-			Axios.post("http://localhost:3001/register", data).then((response) => {
+			Axios.post(`${endpoint()}/register`, data).then((response) => {
 				if (response.data.message) {
 					setRegisterStatus(response.data.message);
 				} else {
 					setRegisterStatus("Welcome Registration Successful");
-					console.log('response is ', response)
-					populateState(onUpdate, data);
+					updateOnLogin(onUpdate, data);
 				}
 			});
 		}

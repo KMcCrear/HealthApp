@@ -4,7 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 import Register from './Register';
 import {Button, Typography} from 'antd';
-import populateState from '../helpers/populateState';
+import updateOnLogin from '../helpers/updateOnLogin';
+import endpoint from '../helpers/endPoint';
 
 const {Title} = Typography;
 
@@ -21,14 +22,14 @@ const Login = (props) =>{
 			setLoginStatus('Please enter your email and password!');
 			return;
 		}
-		Axios.post("http://localhost:3001/login", {
+		Axios.post(`${endpoint()}/login`, {
 			email: state.email,
 			password: password,
 		}).then((response) => {
 			console.log('response message was ', response)
 			if(!response.data.message){
 				onUpdate({loggedIn: true});
-				populateState(onUpdate, response.data[0])
+				updateOnLogin(onUpdate, response.data[0])
 				if (response.data[0].role === "admin") {
 					history.push("/landing", { name: response.data[0].firstname });
 				}

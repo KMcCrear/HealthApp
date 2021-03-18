@@ -1,6 +1,7 @@
 //using this to populate the state with the user details
-const populateState = (onUpdate, data) =>{
+const updateOnLogin = (onUpdate, data) =>{
     onUpdate({email: data.email,
+            id: data.id,
             firstname: data.firstname,
             surname: data.surname,
             message: `Welcome ${data.firstname} ${data.surname}!`,
@@ -8,4 +9,4 @@ const populateState = (onUpdate, data) =>{
     });
 }
 
-export default populateState;
+export default updateOnLogin;

@@ -27,10 +27,9 @@ USE HealthApp;
 --
 -- Table structure for table `users`
 --
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+
+CREATE TABLE IF NOT EXISTS`users` (
+  `id` int(11) PRIMARY KEY NOT NULL,
   `firstname` varchar(512) NOT NULL,
   `surname` varchar(512) NOT NULL,
   `email` varchar(512) NOT NULL,

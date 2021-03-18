@@ -11,7 +11,10 @@ import Axios from "axios";
 import _ from 'lodash';
 import updateOnLogin from './helpers/updateOnLogin'
 import endpoint from './helpers/endPoint'
-const App = (props) =>{
+import Activities from "./pages/Activities";
+import Workouts from "./pages/Workouts";
+
+const App = () =>{
 	const [state, setNewState] = useState({
 		loggedIn: false,
 		id: null,
@@ -46,7 +49,6 @@ const App = (props) =>{
 
 	console.log('state is ', state);
 	if(!state.loggedIn) {
-		//user not logged in
 		return (<Login state={state} onUpdate={onUpdate}/>)
 	}
 	return (
@@ -67,14 +69,32 @@ const App = (props) =>{
 						<Register
 							state={state}
 							onUpdate={onUpdate}
-						/>
-					)}
-				/>
-				<Route path="/covidtracking" render={() => <CovidTracker />} />
-			</Router>
-		</div>
-	);
-	
-}
+						/>						
+						)}
+					/>
 
+						<Route
+							path="/register"
+							render={() => (
+								<Register
+									state={state}
+									onUpdate={onUpdate}
+								/>
+							)}
+						/>
+						<Route path="/covidtracking" render={() => <CovidTracker />} />
+						<Route
+							path="/activities"
+							render={() => (
+								<Activities
+								// state={this.state}
+								// onUpdate={this.onUpdate.bind(this)}
+								/>
+							)}
+						/>
+						<Route path="/workouts" render={() => <Workouts />} />
+					</Router>
+				</div>
+		);
+	}
 export default App;

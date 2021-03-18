@@ -4,7 +4,7 @@ import endpoint from '../helpers/endPoint';
 import React, {useEffect, useState} from "react";
 import _ from 'lodash';
 import {Row, Col, Table, Space, Button, Modal, Input, Form, TimePicker, DatePicker} from 'antd';
-import { EditFilled, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 const Home=(props)=> {
 

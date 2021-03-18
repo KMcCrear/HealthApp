@@ -1,11 +1,10 @@
 import { React, useState } from "react";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
-import { Link } from "react-router-dom";
 import {Button } from 'antd';
 import {CaretLeftOutlined } from '@ant-design/icons';
-import Login from './Login';
-import populateState from '../helpers/populateState';
+import updateOnLogin from '../helpers/updateOnLogin';
+import endpoint from '../helpers/endPoint';
 
 const  Register = (props) => {
 	const [showLinks, setShowLinks] = useState(false);
@@ -23,18 +22,18 @@ const  Register = (props) => {
 		} else if(passwordReg!==passwordTwoReg){
 			alert("Passwords don't match!")
 		}else {
-			Axios.post("http://localhost:3001/register", {
+			const data ={
 				firstname: firstNameReg,
 				surname: surNameReg,
 				email: emailReg,
-				password: passwordReg,
-			}).then((response) => {
+				password: passwordTwoReg
+			}
+			Axios.post(`${endpoint()}/register`, data).then((response) => {
 				if (response.data.message) {
 					setRegisterStatus(response.data.message);
 				} else {
 					setRegisterStatus("Welcome Registration Successful");
-					console.log('response is ', response)
-					onUpdate({email: emailReg, firstname: firstNameReg, surname: surNameReg, loggedIn: true})
+					updateOnLogin(onUpdate, data);
 				}
 			});
 		}

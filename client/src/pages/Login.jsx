@@ -4,7 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 import Register from './Register';
 import {Button, Typography} from 'antd';
-import populateState from '../helpers/populateState';
+import updateOnLogin from '../helpers/updateOnLogin';
+import endpoint from '../helpers/endPoint';
 
 const {Title} = Typography;
 
@@ -15,21 +16,21 @@ const Login = (props) =>{
 	const [password, setPassword] = useState(null);
 	const [loginStatus, setLoginStatus] = useState("");
 	const [registerClicked, setRegisterClicked] = useState(false);
-
+	
 	const login = () => {
 		if(!state.email  || !password){
 			setLoginStatus('Please enter your email and password!');
 			return;
 		}
-		Axios.post("http://localhost:3001/login", {
+		Axios.post(`${endpoint()}/login`, {
 			email: state.email,
 			password: password,
 		}).then((response) => {
 			console.log('response message was ', response)
 			if(!response.data.message){
 				onUpdate({loggedIn: true});
-				populateState(onUpdate, response.data[0])
-				if (response.data[0].role === "admin") {
+				updateOnLogin(onUpdate, response.data[0])
+				if (response.data[0]?.role === "admin") {
 					history.push("/landing", { name: response.data[0].firstname });
 				}
 			}
@@ -71,11 +72,11 @@ const Login = (props) =>{
 							}}
 						/>
 						<div className="buttonContainer">
-							<Button onClick={login}>Login</Button>
-							<Title level={3}>
+							<button onClick={login}>Login</button>
+							<Title level={4}>
 								Don't have an account?
 							</Title>
-							<Button onClick={()=>{setRegisterClicked(true);}}>Register</Button>
+							<button onClick={()=>{setRegisterClicked(true);}}>Register</button>
 							<Title level={3} type='secondary' id="loginStatus">{loginStatus}</Title>
 						</div>
 					</div>

@@ -9,7 +9,8 @@ export default function NavBar() {
 			<div className="Navbar">
 				<div className="leftSide">
 					<div className="links" id={showLinks ? "hidden" : ""}>
-						<a href="/">Home</a>
+						<a href="/home">Home</a>
+						<a href="/activities">Activities</a>
 						<a href="/profile">Profile</a>
 						<a href="/aboutus">About us</a>
 						<a href="/covidtracking">Covid-19</a>

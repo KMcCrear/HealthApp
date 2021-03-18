@@ -7,32 +7,37 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import CovidTracker from "./pages/CovidTracker";
+import Axios from "axios";
+import _ from 'lodash';
+import updateOnLogin from './helpers/updateOnLogin'
+import endpoint from './helpers/endPoint'
 import Activities from "./pages/Activities";
 import Workouts from "./pages/Workouts";
 
-import Axios from "axios";
-import _ from 'lodash';
-import populateState from './helpers/populateState'
 const App = () =>{
 	const [state, setNewState] = useState({
 		loggedIn: false,
+		id: null,
 		email: null,
 		firstname: null,
 		surname: null,
 		message: null,
+		reminders:[],
 	});
 	Axios.defaults.withCredentials = true;
 
+	//checking if the user is logged in
 	useEffect(() => {
 		if(state.loggedIn){
 			return;
 		}
-        Axios.get("http://localhost:3001/login").then((response) => {
+        Axios.get(`${endpoint()}/login`).then((response) => {
 			console.log('response was ', response.data);
-            if (response.data.loggedIn == true) {
-				populateState(onUpdate, response.data.user[0]);
+            if (response.data.loggedIn === true) {
+				updateOnLogin(onUpdate, response.data.user[0]);
             }
         });
+
     }, []);
 
 	const onUpdate = (object) =>{
@@ -52,7 +57,7 @@ const App = () =>{
 			<NavBar />
 			<Router>
 				<Route
-					path="/"
+					path="/home"
 					exact
 					render={() => (
 						<Home state={state} onUpdate={onUpdate} />
@@ -64,14 +69,16 @@ const App = () =>{
 						<Register
 							state={state}
 							onUpdate={onUpdate}
-						/>
+						/>						
+						)}
+					/>
 
 						<Route
 							path="/register"
 							render={() => (
 								<Register
-									state={this.state}
-									onUpdate={this.onUpdate.bind(this)}
+									state={state}
+									onUpdate={onUpdate}
 								/>
 							)}
 						/>
@@ -88,16 +95,6 @@ const App = () =>{
 						<Route path="/workouts" render={() => <Workouts />} />
 					</Router>
 				</div>
-			</>
 		);
 	}
-					)}
-				/>
-			</Router>
-		</div>
-	);
-	
-
-}
-
 export default App;

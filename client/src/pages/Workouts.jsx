@@ -11,7 +11,7 @@ const Activity = () => {
 			</div>
 			<div className="workoutDetails">
 				<div>
-					<h3>Workout Details:</h3>
+					<h3>Add Workout:</h3>
 				</div>
 				<label>{location.state}</label>
 				<form className="workoutForm">

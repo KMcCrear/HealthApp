@@ -15,12 +15,17 @@ const Activites = () => {
 			if (response.data) {
 				console.log(response.data);
 				let renderActiveDivs = response.data;
-				renderDivs(renderActiveDivs);
+				renderActivities(renderActiveDivs);
+			}
+		});
+		Axios.get("http://localhost:3001/loadWorkoutData").then((response) => {
+			if (response.data) {
+				console.log(response.data);
 			}
 		});
 	}, []);
 
-	const renderDivs = (renderActiveDivs) => {
+	const renderActivities = (renderActiveDivs) => {
 		let activNames = renderActiveDivs.map((activity) => (
 			<a
 				className="activityLinks"
@@ -48,6 +53,9 @@ const Activites = () => {
 			<div className="activities">
 				<h1>Activities</h1>
 				<div className="activityDivs">{activity}</div>
+			</div>
+			<div className="loadWorkoutData">
+				<h2>Previous Workouts</h2>
 			</div>
 		</div>
 	);

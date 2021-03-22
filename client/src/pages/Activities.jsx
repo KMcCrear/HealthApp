@@ -3,14 +3,15 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
-import populateActivity from "../helpers/populateActivity";
+import endpoint from "../helpers/endPoint";
 
-const Activites = () => {
+const Activites = (props) => {
+	const { state, onUpdate } = props;
 	const [activity, setActivity] = useState(null);
 	const history = useHistory();
 
 	useEffect(() => {
-		Axios.get("http://localhost:3001/loadActivity").then((response) => {
+		Axios.get(`${endpoint()}/loadActivity`).then((response) => {
 			//console.log(response.data);
 			if (response.data) {
 				console.log(response.data);
@@ -18,12 +19,14 @@ const Activites = () => {
 				renderActivities(renderActiveDivs);
 			}
 		});
-		Axios.get("http://localhost:3001/loadWorkoutData").then((response) => {
+		Axios.post(`${endpoint()}/loadworkoutdata`, {
+			id: state.id,
+		}).then((response) => {
 			if (response.data) {
 				console.log(response.data);
 			}
 		});
-	}, []);
+	}, [state.id]);
 
 	const renderActivities = (renderActiveDivs) => {
 		let activNames = renderActiveDivs.map((activity) => (

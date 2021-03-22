@@ -183,12 +183,12 @@ app.get("/loadActivity", (req, res) => {
 	});
 });
 
-app.get("loadWorkoutData", (req, res) => {
-	const userId = req.body.useId;
-	console.log(res);
-	db.query(`SELECT * FROM workouts WHERE userid = ${userId}`, (err, result) => {
+app.post("/loadworkoutdata", (req, res) => {
+	const id = req.body.id;
+	console.log("userID: ", id);
+	db.query(`SELECT * FROM workouts WHERE userid = ${id};`, (err, result) => {
 		if (err) {
-			res.send({ Error: err });
+			res.send({ message: err });
 		} else {
 			if (result.length > 0) {
 				req.session.workouts = result;
@@ -197,6 +197,30 @@ app.get("loadWorkoutData", (req, res) => {
 			}
 		}
 	});
+});
+
+app.post("/submitworkout", (req, res) => {
+	const id = req.body.id;
+	const workoutName = req.body.workoutName;
+	const time = req.body.totalTime;
+	const distance = req.body.distance;
+	const calories = req.body.calories;
+	const heartRate = req.body.heartRate;
+	const location = req.body.location;
+
+	console.log("Info: ", id, time, distance, calories, heartRate, location);
+	db.query(
+		"INSERT INTO workouts(userid, workoutname, totaltime, distance, calories, avgheartrate, location) VALUES (?, ?, ?, ?, ?, ?, ?)",
+		[id, workoutName, time, distance, calories, heartRate, location],
+		(err, result) => {
+			if (err) {
+				res.send({ message: err });
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
 });
 
 app.listen(serverPort, () => {

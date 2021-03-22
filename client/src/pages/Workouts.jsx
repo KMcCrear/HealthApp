@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Axios from "axios";
 import endpoint from "../helpers/endPoint";
 import { useState } from "react";
+import Button from "@material-ui/core/Button";
 
 const Activity = (props) => {
 	const location = useLocation();
@@ -73,7 +74,9 @@ const Activity = (props) => {
 						placeholder="Location of workout"
 						onChange={(e) => setLocation(e.target.value)}
 					/>
-					<button onClick={submitWorkout}>Submit Workout</button>
+					<Button varient="contained" onClick={submitWorkout}>
+						Submit Workout
+					</Button>
 				</form>
 			</div>
 		</div>

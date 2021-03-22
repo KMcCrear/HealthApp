@@ -8,6 +8,7 @@ import endpoint from "../helpers/endPoint";
 const Activites = (props) => {
 	const { state, onUpdate } = props;
 	const [activity, setActivity] = useState(null);
+	const [workout, setWorkout] = useState();
 	const history = useHistory();
 
 	useEffect(() => {
@@ -24,6 +25,8 @@ const Activites = (props) => {
 		}).then((response) => {
 			if (response.data) {
 				console.log(response.data);
+				let renderPrevWorkouts = response.data;
+				renderPrev(renderPrevWorkouts);
 			}
 		});
 	}, [state.id]);
@@ -45,6 +48,16 @@ const Activites = (props) => {
 		setActivity(activNames);
 	};
 
+	const renderPrev = (workouts) => {
+		let prevWorouts = workouts.map((info) => (
+			<p className="previousWorkouts" key={info.id}>
+				{info.workoutname} {info.totalTime} {info.calories}{" "}
+				{info.avergeheartrate} {info.location}
+			</p>
+		));
+		setWorkout(prevWorouts);
+	};
+
 	const passData = (e, activityName) => {
 		e.preventDefault();
 		console.log(activityName);
@@ -59,6 +72,7 @@ const Activites = (props) => {
 			</div>
 			<div className="loadWorkoutData">
 				<h2>Previous Workouts</h2>
+				<div>{workout}</div>
 			</div>
 		</div>
 	);

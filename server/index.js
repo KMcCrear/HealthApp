@@ -223,6 +223,53 @@ app.post("/submitworkout", (req, res) => {
 	);
 });
 
+app.post("/addworkout", (req, res) => {
+	const workoutName = req.body.workoutName;
+	console.log("Workout Name: ", workoutName);
+
+	db.query(
+		"INSERT INTO activities(activityName) VALUES (?)",
+		[workoutName],
+		(err, result) => {
+			if (err) {
+				res.send({ message: err });
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
+
+app.get("/load-workouts", (req, res) => {
+	db.query("SELECT activityName FROM activities", (err, result) => {
+		if (err) {
+			console.log(err);
+			res.send({ message: err });
+		} else {
+			console.log(result);
+			res.send(result);
+		}
+	});
+});
+
+app.post("/deleteworkout", (req, res) => {
+	const workoutName = req.body.toDelete;
+
+	db.query(
+		`DELETE FROM activities WHERE activityName = "${workoutName}"`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				res.send({ message: err });
+			} else {
+				console.log(result);
+				res.send(result);
+			}
+		}
+	);
+});
+
 app.listen(serverPort, () => {
 	console.log(`Server running on port ${serverPort}`);
 });

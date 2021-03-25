@@ -3,24 +3,35 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
-import populateActivity from "../helpers/populateActivity";
+import endpoint from "../helpers/endPoint";
 
-const Activites = () => {
+const Activites = (props) => {
+	const { state, onUpdate } = props;
 	const [activity, setActivity] = useState(null);
+	const [workout, setWorkout] = useState();
 	const history = useHistory();
 
 	useEffect(() => {
-		Axios.get("http://localhost:3001/loadActivity").then((response) => {
+		Axios.get(`${endpoint()}/loadActivity`).then((response) => {
 			//console.log(response.data);
 			if (response.data) {
 				console.log(response.data);
 				let renderActiveDivs = response.data;
-				renderDivs(renderActiveDivs);
+				renderActivities(renderActiveDivs);
 			}
 		});
-	}, []);
+		Axios.post(`${endpoint()}/loadworkoutdata`, {
+			id: state.id,
+		}).then((response) => {
+			if (response.data) {
+				console.log(response.data);
+				let renderPrevWorkouts = response.data;
+				renderPrev(renderPrevWorkouts);
+			}
+		});
+	}, [state.id]);
 
-	const renderDivs = (renderActiveDivs) => {
+	const renderActivities = (renderActiveDivs) => {
 		let activNames = renderActiveDivs.map((activity) => (
 			<a
 				className="activityLinks"
@@ -37,6 +48,19 @@ const Activites = () => {
 		setActivity(activNames);
 	};
 
+	const renderPrev = (workouts) => {
+		let prevWorouts = workouts.map((info) => (
+			<div className="previousWorkouts" key={info.id}>
+				{info.workoutname}
+				<br /> Total Time: {info.totaltime}
+				<br /> Calories: {info.calories}
+				<br /> Avg Heart Rate: {info.avgheartrate}
+				<br /> Location: {info.location}
+			</div>
+		));
+		setWorkout(prevWorouts);
+	};
+
 	const passData = (e, activityName) => {
 		e.preventDefault();
 		console.log(activityName);
@@ -44,10 +68,20 @@ const Activites = () => {
 	};
 
 	return (
-		<div className="Container">
+		<div className="ActivContainer">
 			<div className="activities">
-				<h1>Activities</h1>
+				<header>
+					<h1>Activities</h1>
+				</header>
 				<div className="activityDivs">{activity}</div>
+			</div>
+			<div className="loadWorkoutData">
+				<div className="workoutHeader">
+					<header>
+						<h2>Previous Workouts</h2>
+					</header>
+				</div>
+				<div className="workoutDivs">{workout}</div>
 			</div>
 		</div>
 	);

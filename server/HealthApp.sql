@@ -50,13 +50,25 @@ CREATE TABLE IF NOT EXISTS `reminders`(
   `date` varchar(20),
   `time` varchar(20),
   `location` varchar(512)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE  IF EXISTS `workouts`;
+CREATE TABLE IF NOT EXISTS `workouts`(
+  `id` int(11) NOT NUll AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  `userid` int(11) NOT NULL,
+  `workoutname` varchar(512) NOT NULL,
+  `totaltime` varchar(20),
+  `distance` int(20),
+  `calories` int(20),
+  `avgheartrate` int(20),
+  `loaction` varchar(512)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE  IF EXISTS `activities`;
 
 CREATE TABLE `activities` (
-  `id` int(1) NOT NULL,
+  `id` int(11) NOT NULL,
   `activityName` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

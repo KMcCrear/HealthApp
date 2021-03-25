@@ -5,6 +5,8 @@ import Axios from "axios";
 import endpoint from "../helpers/endPoint";
 import { useState } from "react";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { spacing } from "@material-ui/system";
 
 const Activity = (props) => {
 	const location = useLocation();
@@ -45,39 +47,63 @@ const Activity = (props) => {
 			</div>
 			<div className="workoutDetails">
 				<div>
-					<h3>Add Workout:</h3>
+					<h3>Record Workout:</h3>
 				</div>
-				<label>{workoutName}</label>
-				<form className="workoutForm">
-					<label>Total Time: </label>
-					<input type="time" onChange={(e) => setTotalTime(e.target.value)} />
-					<label>Distance: </label>
-					<input
-						type="number"
-						placeholder="In meters"
-						onChange={(e) => setDistance(e.target.value)}
-					/>
-					<label>Colories Burned: </label>
-					<input
-						type="number"
-						onChange={(e) => setCaloriesBurned(e.target.value)}
-					/>
-					<label>Avg Heart Rate: </label>
-					<input
-						type="number"
-						placeholder="bpm"
-						onChange={(e) => setHeartRate(e.target.value)}
-					/>
-					<label>Location: </label>
-					<input
-						type="text"
-						placeholder="Location of workout"
-						onChange={(e) => setLocation(e.target.value)}
-					/>
-					<Button varient="contained" onClick={submitWorkout}>
-						Submit Workout
-					</Button>
-				</form>
+				<label className="workoutName">{workoutName}</label>
+				<div className="inputWorkout">
+					<form className="workoutForm">
+						<TextField
+							id="outlined-basic"
+							variant="outlined"
+							type="time"
+							onChange={(e) => setTotalTime(e.target.value)}
+						/>
+						<br />
+						<TextField
+							id="outlined-basic"
+							label="Distance"
+							variant="outlined"
+							type="number"
+							placeholder="In meters"
+							onChange={(e) => setDistance(e.target.value)}
+						/>
+						<br />
+						<TextField
+							id="outlined-basic"
+							label="Colories Burned"
+							variant="outlined"
+							type="number"
+							onChange={(e) => setCaloriesBurned(e.target.value)}
+						/>
+						<br />
+						<TextField
+							id="outlined-basic"
+							label="Avg Heart Rate"
+							variant="outlined"
+							type="number"
+							placeholder="bpm"
+							onChange={(e) => setHeartRate(e.target.value)}
+						/>
+						<br />
+						<TextField
+							id="outlined-basic"
+							label="Location"
+							variant="outlined"
+							type="text"
+							placeholder="Location of workout"
+							onChange={(e) => setLocation(e.target.value)}
+						/>
+						<br />
+						<Button
+							id="submitButton"
+							color="primary"
+							varient="contained"
+							onClick={submitWorkout}
+						>
+							Submit Workout
+						</Button>
+					</form>
+				</div>
 			</div>
 		</div>
 	);

@@ -50,10 +50,13 @@ const Activites = (props) => {
 
 	const renderPrev = (workouts) => {
 		let prevWorouts = workouts.map((info) => (
-			<p className="previousWorkouts" key={info.id}>
-				{info.workoutname} {info.totalTime} {info.calories}{" "}
-				{info.avergeheartrate} {info.location}
-			</p>
+			<div className="previousWorkouts" key={info.id}>
+				{info.workoutname}
+				<br /> Total Time: {info.totaltime}
+				<br /> Calories: {info.calories}
+				<br /> Avg Heart Rate: {info.avgheartrate}
+				<br /> Location: {info.location}
+			</div>
 		));
 		setWorkout(prevWorouts);
 	};
@@ -70,9 +73,13 @@ const Activites = (props) => {
 				<h1>Activities</h1>
 				<div className="activityDivs">{activity}</div>
 			</div>
+			<div className="workoutHeader">
+				<header>
+					<h2>Previous Workouts</h2>
+				</header>
+			</div>
 			<div className="loadWorkoutData">
-				<h2>Previous Workouts</h2>
-				<div>{workout}</div>
+				<div className="workoutDivs">{workout}</div>
 			</div>
 		</div>
 	);

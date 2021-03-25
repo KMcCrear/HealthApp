@@ -98,43 +98,50 @@ app.get("/login", (req, res) => {
 	}
 });
 
-app.get('/home/reminders-get', (req, res)=>{
+app.get("/home/reminders-get", (req, res) => {
 	const userId = req.query.userId;
-	console.log('USER QUERY IS ', req.query);
-	db.query(`SELECT * FROM reminders WHERE userid = ${userId};`, (err, result)=>{
-		if(err){
-			res.send({err: err});
-		} else {
-			res.send(result)
+	console.log("USER QUERY IS ", req.query);
+	db.query(
+		`SELECT * FROM reminders WHERE userid = ${userId};`,
+		(err, result) => {
+			if (err) {
+				res.send({ err: err });
+			} else {
+				res.send(result);
+			}
 		}
-	})
-})
+	);
+});
 
-app.post('/home/reminders-add', (req, res)=>{
+app.post("/home/reminders-add", (req, res) => {
 	const info = req.body.info;
 	const date = req.body.date;
 	const location = req.body.location;
 	const time = req.body.time;
 	const userid = req.body.userId;
 
-	db.query(`INSERT INTO reminders(userid, info, date, time, location) VALUES(?, ?, ?, ?, ?)`,[userid, info, date, time, location], (err, result)=>{
-		if(err){
+	db.query(
+		`INSERT INTO reminders(userid, info, date, time, location) VALUES(?, ?, ?, ?, ?)`,
+		[userid, info, date, time, location],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
+app.post("/home/reminders-delete", (req, res) => {
+	const id = req.body.id;
+	db.query(`DELETE FROM reminders where id = ${id}`, (err, result) => {
+		if (err) {
 			console.log(err);
 		} else {
 			res.send(result);
 		}
-	})
-})
-app.post('/home/reminders-delete', (req, res)=>{
-	const id = req.body.id;
-	db.query(`DELETE FROM reminders where id = ${id}`, (err,result)=>{
-		if(err){
-			console.log(err);
-		} else{
-			res.send(result);
-		}
-	})
-})
+	});
+});
 
 app.post("/login", (req, res) => {
 	const password = req.body.password;
@@ -174,6 +181,46 @@ app.get("/loadActivity", (req, res) => {
 			}
 		}
 	});
+});
+
+app.post("/loadworkoutdata", (req, res) => {
+	const id = req.body.id;
+	console.log("userID: ", id);
+	db.query(`SELECT * FROM workouts WHERE userid = ${id};`, (err, result) => {
+		if (err) {
+			res.send({ message: err });
+		} else {
+			if (result.length > 0) {
+				req.session.workouts = result;
+				console.log(result);
+				res.send(result);
+			}
+		}
+	});
+});
+
+app.post("/submitworkout", (req, res) => {
+	const id = req.body.id;
+	const workoutName = req.body.workoutName;
+	const time = req.body.totalTime;
+	const distance = req.body.distance;
+	const calories = req.body.calories;
+	const heartRate = req.body.heartRate;
+	const location = req.body.location;
+
+	console.log("Info: ", id, time, distance, calories, heartRate, location);
+	db.query(
+		"INSERT INTO workouts(userid, workoutname, totaltime, distance, calories, avgheartrate, location) VALUES (?, ?, ?, ?, ?, ?, ?)",
+		[id, workoutName, time, distance, calories, heartRate, location],
+		(err, result) => {
+			if (err) {
+				res.send({ message: err });
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
 });
 
 app.listen(serverPort, () => {

@@ -68,17 +68,19 @@ const Activites = (props) => {
 	};
 
 	return (
-		<div className="Container">
+		<div className="ActivContainer">
 			<div className="activities">
-				<h1>Activities</h1>
+				<header>
+					<h1>Activities</h1>
+				</header>
 				<div className="activityDivs">{activity}</div>
 			</div>
-			<div className="workoutHeader">
-				<header>
-					<h2>Previous Workouts</h2>
-				</header>
-			</div>
 			<div className="loadWorkoutData">
+				<div className="workoutHeader">
+					<header>
+						<h2>Previous Workouts</h2>
+					</header>
+				</div>
 				<div className="workoutDivs">{workout}</div>
 			</div>
 		</div>

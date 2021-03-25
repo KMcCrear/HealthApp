@@ -13,7 +13,7 @@ button:hover {
 }
 
 .Navbar {
-	background-color: #021e39;
+	background-color: #5b3467;
 	width: 100%;
 	height: 80px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -87,7 +87,7 @@ button:hover {
 		height: 230px;
 		max-height: 230px;
 		width: 100%;
-		background-color: #021e39;
+		background-color: #5b3467;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -236,7 +236,19 @@ button:hover {
 	);
 }
 
+.ActivContainer {
+	background-color: #8b5fbf;
+}
+
 .activities {
+	background-color: #8b5fbf;
+	height: 320px;
+}
+.activities header {
+	font-size: 20px;
+}
+
+.activities h1 {
 	margin-left: 15px;
 }
 
@@ -257,7 +269,8 @@ button:hover {
 	align-items: center;
 	color: black;
 	text-decoration: none;
-	box-shadow: 5px 10px 10px 3px #c7c6c6;
+	background-color: #fff;
+	box-shadow: 5px 10px 10px 3px #414141;
 }
 
 .activities .activityDivs .activityLinks:hover {
@@ -273,6 +286,12 @@ button:hover {
 .workoutHeader {
 }
 
+.loadWorkoutData {
+	background-color: #d183c9;
+	height: 930px;
+	max-height: 1160px;
+}
+
 .loadWorkoutData .workoutDivs {
 	display: flex;
 	flex-direction: row;
@@ -286,7 +305,8 @@ button:hover {
 	height: 130px;
 	width: 180px;
 	margin-left: 15px;
-	box-shadow: 5px 10px 10px 3px #c7c6c6;
+	box-shadow: 5px 10px 10px 3px #414141;
+	background-color: #fff;
 }
 
 .workoutHeader {

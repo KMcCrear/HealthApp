@@ -12,8 +12,8 @@ export default function NavBar() {
 						<a href="/home">Home</a>
 						<a href="/activities">Activities</a>
 						<a href="/profile">Profile</a>
-						<a href="/aboutus">About us</a>
 						<a href="/covidtracking">Covid-19</a>
+						<a href="/adminedit">Admin</a>
 					</div>
 					<button onClick={() => setShowLinks(!showLinks)}>
 						<ReorderIcon />

@@ -13,6 +13,7 @@ import updateOnLogin from "./helpers/updateOnLogin";
 import endpoint from "./helpers/endPoint";
 import Activities from "./pages/Activities";
 import Workouts from "./pages/Workouts";
+import AdminEdit from "./pages/AdminEdit";
 
 const App = () => {
 	const [state, setNewState] = useState({
@@ -76,6 +77,11 @@ const App = () => {
 				<Route
 					path="/workouts"
 					render={() => <Workouts state={state} onUpdate={onUpdate} />}
+				/>
+
+				<Route
+					path="/adminedit"
+					render={() => <AdminEdit state={state} onUpdate={onUpdate} />}
 				/>
 			</Router>
 		</div>

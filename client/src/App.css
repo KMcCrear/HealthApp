@@ -350,3 +350,48 @@ button:hover {
 .workoutDetails .workoutForm #submitButton:hover {
 	box-shadow: 5px 10px 10px 3px #c7c6c6;
 }
+
+.adminContainer {
+	margin-left: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.adminContainer .adminPage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 10px;
+}
+
+.adminPage .addWorkout header {
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.adminPage .addWorkout {
+}
+
+.adminPage .addWorkout .inputWorkInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+}
+
+.adminPage .addWorkout .inputWorkInfo form {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+}
+
+.deleteWorkout {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+}
+
+.deleteWorkout header {
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+}

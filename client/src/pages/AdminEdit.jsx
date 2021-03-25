@@ -94,12 +94,14 @@ export default function AdminEdit() {
 					<div className="delteWorkoutForm">
 						<form className="deleteForm">
 							<NativeSelect
+								label="Workout Name"
 								id="deleteSelect"
 								onChange={(e) => setWorkoutToDelete(e.target.value)}
 							>
 								<option defaultValue=""></option>
 								{workoutOptions}
 							</NativeSelect>
+							<br />
 							<Button
 								id="submitButton"
 								color="primary"

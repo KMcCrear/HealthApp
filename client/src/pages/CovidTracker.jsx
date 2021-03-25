@@ -5,6 +5,7 @@ export default function CovidTracker() {
 	const [covidDate, setDate] = useState();
 	const [newCases, setNewCases] = useState();
 	const [location, setLocation] = useState("");
+	const [covidData, setCovidData] = useState();
 
 	async function getData() {
 		if (location == "") {
@@ -13,7 +14,7 @@ export default function CovidTracker() {
 			await fetch(
 				"https://api.coronavirus.data.gov.uk/v1/data?" +
 					`filters=areaType=nation;areaName=${location}&` +
-					'structure={"date":"date","newCases":"newCasesByPublishDate"}'
+					'structure={"date":"date","newCases":"newCasesByPublishDate", "newCasesByPublishDate":"newCasesByPublishDate"}'
 			).then((response) =>
 				response
 					.json()
@@ -22,12 +23,22 @@ export default function CovidTracker() {
 					}))
 					.then((res) => {
 						const dataArray = res.data.data;
-						setDate(dataArray[0].date);
-						setNewCases(dataArray[0].newCases);
+						let firstTen = dataArray.slice(0, 10);
+						mapInfo(firstTen);
 					})
 			);
 		}
 	}
+
+	const mapInfo = (firstTen) => {
+		let mappedInfo = firstTen.map((data) => (
+			<div className="covidData" key={data.date}>
+				Data: {data.date} <br />
+				Number of Cases: {data.newCases}
+			</div>
+		));
+		setCovidData(mappedInfo);
+	};
 
 	return (
 		<div>
@@ -50,14 +61,7 @@ export default function CovidTracker() {
 						/>
 						<button onClick={getData}>Click</button>
 					</div>
-					<div className="loadedData">
-						<form>
-							<label>Date: </label>
-							<p>{covidDate}</p>
-							<label>New Cases: </label>
-							<p>{newCases}</p>
-						</form>
-					</div>
+					<div className="loadedData">{covidData}</div>
 				</div>
 			</div>
 		</div>

@@ -16,17 +16,18 @@ function NavBar(props) {
 		window.location.reload(false);
 	}
 	
+
 	return (
 		<div>
 			<div className="Navbar">
 				<div className="leftSide">
 					<div className="links" id={showLinks ? "hidden" : ""}>
-						<a href="/home">  Home</a>
-						<a href="/activities">  Activities</a>
-						<a href="/aboutus">About us</a>
+						<a href="/home">Home</a>
+						<a href="/activities">Activities</a>
+						<a href="/profile">Profile</a>
 						<a href="/covidtracking">Covid-19</a>
+						<a href="/adminedit">Admin</a>
 					</div>
-			
 					<button onClick={() => setShowLinks(!showLinks)}>
 						<ReorderIcon />
 					</button>
@@ -51,4 +52,6 @@ function NavBar(props) {
 		</div>
 	);
 }
+
 export default NavBar
+

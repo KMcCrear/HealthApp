@@ -13,6 +13,7 @@ import updateOnLogin from "./helpers/updateOnLogin";
 import endpoint from "./helpers/endPoint";
 import Activities from "./pages/Activities";
 import Workouts from "./pages/Workouts";
+import AdminEdit from "./pages/AdminEdit";
 
 const App = () => {
 	const [state, setNewState] = useState({
@@ -37,10 +38,9 @@ const App = () => {
 				updateOnLogin(onUpdate, response.data.user[0]);
 			}
 		});
-    }, [state.loggedIn]);
+	}, [state.loggedIn]);
 
-
-	const onUpdate = (object) =>{
+	const onUpdate = (object) => {
 		const newState = _.cloneDeep(state);
 		console.log("updating the state ", object);
 		_.merge(newState, object);
@@ -52,10 +52,11 @@ const App = () => {
 		return <Login state={state} onUpdate={onUpdate} />;
 	}
 
-	if (state.id){
+	if (state.id) {
 		return (
 			<div className="App">
-			<NavBar state={state} onUpdate={onUpdate}/>
+				<NavBar state={state} onUpdate={onUpdate} />
+
 				<Route
 					path="/home"
 					exact
@@ -79,8 +80,13 @@ const App = () => {
 					path="/workouts"
 					render={() => <Workouts state={state} onUpdate={onUpdate} />}
 				/>
-		</div>
-	);
+
+				<Route
+					path="adminedit"
+					render={() => <AdminEdit state={state} onUpdate={onUpdate} />}
+				/>
+			</div>
+		);
+	}
 };
-}
 export default App;

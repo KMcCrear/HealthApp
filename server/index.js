@@ -30,7 +30,7 @@ set on the front-end too.
 app.use(
 	cors({
 		origin: ["http://localhost:3000"],
-		methods: ["GET", "POST"],
+		methods: ["GET", "POST", "PUT"],
 		credentials: true,
 	})
 );
@@ -97,10 +97,12 @@ app.get("/login", (req, res) => {
 		res.send({ loggedIn: false });
 	}
 });
-
+app.put('/logout', (req,res)=>{
+	req.session.destroy();
+})
 app.get('/home/reminders-get', (req, res)=>{
 	const userId = req.query.userId;
-	console.log('USER QUERY IS ', req.query);
+	console.log('USER QUERY IS ', req.query.userId);
 	db.query(`SELECT * FROM reminders WHERE userid = ${userId};`, (err, result)=>{
 		if(err){
 			res.send({err: err});
@@ -115,9 +117,9 @@ app.post('/home/reminders-add', (req, res)=>{
 	const date = req.body.date;
 	const location = req.body.location;
 	const time = req.body.time;
-	const userid = req.body.userId;
-
-	db.query(`INSERT INTO reminders(userid, info, date, time, location) VALUES(?, ?, ?, ?, ?)`,[userid, info, date, time, location], (err, result)=>{
+	const userId = req.body.userId;
+	console.log('adding query req.body ', req.body.userId);
+	db.query(`INSERT INTO reminders(userid, info, date, time, location) VALUES(?, ?, ?, ?, ?)`,[userId, info, date, time, location], (err, result)=>{
 		if(err){
 			console.log(err);
 		} else {

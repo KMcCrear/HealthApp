@@ -4,7 +4,7 @@ import endpoint from '../helpers/endPoint';
 import React, {useEffect, useState} from "react";
 import _ from 'lodash';
 import {Row, Col, Table, Space, Button, Modal, Input, Form, TimePicker, DatePicker} from 'antd';
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const Home=(props)=> {
 
@@ -16,7 +16,7 @@ const Home=(props)=> {
 		time: '',
 		date: '',
 		location: '',
-		userId: null,
+		userId: state.id,
 		timeMoment: null,
 		dateMoment: null,
 	}
@@ -39,9 +39,6 @@ const Home=(props)=> {
 		setNewRow(row)
 	}
 
-	if(!newRow.userId && state.id){
-		updateNewRow({userId: state.id});
-	}
 	const tableColumns = [
 		{
 			title: 'Information',
@@ -67,9 +64,7 @@ const Home=(props)=> {
 			title:'Action',
 			key:'action',
 			render: (text)=>(
-				<Space>
-				<Button onClick={()=>deleteRow(text)}>Delete</Button>
-				</Space>
+				<Button icon={<DeleteOutlined/>} onClick={()=>deleteRow(text)}/>
 			)
 		}
 	]

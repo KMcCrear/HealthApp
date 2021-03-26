@@ -28,11 +28,11 @@ const Login = (props) =>{
 		}).then((response) => {
 			console.log('response message was ', response)
 			if(!response.data.message){
-				onUpdate({loggedIn: true});
 				updateOnLogin(onUpdate, response.data[0])
 				if (response.data[0]?.role === "admin") {
 					history.push("/landing", { name: response.data[0].firstname });
 				}
+				history.push("/home");
 			}
 			else {
 				setLoginStatus(response.data.message);

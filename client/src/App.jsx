@@ -38,7 +38,7 @@ const App = () =>{
             }
         });
 
-    }, []);
+    }, [state.loggedIn]);
 
 	const onUpdate = (object) =>{
 		const newState = _.cloneDeep(state);
@@ -51,11 +51,11 @@ const App = () =>{
 	if(!state.loggedIn) {
 		return (<Login state={state} onUpdate={onUpdate}/>)
 	}
-	return (
-		
+
+	if (state.id){
+		return (
 			<div className="App">
-			<NavBar />
-			<Router>
+			<NavBar state={state} onUpdate={onUpdate}/>
 				<Route
 					path="/home"
 					exact
@@ -93,8 +93,8 @@ const App = () =>{
 							)}
 						/>
 						<Route path="/workouts" render={() => <Workouts />} />
-					</Router>
 				</div>
 		);
+	}
 	}
 export default App;

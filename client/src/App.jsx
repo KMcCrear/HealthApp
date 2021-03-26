@@ -38,7 +38,7 @@ const App = () => {
 				updateOnLogin(onUpdate, response.data.user[0]);
 			}
 		});
-	}, []);
+	}, [state.loggedIn]);
 
 	const onUpdate = (object) => {
 		const newState = _.cloneDeep(state);
@@ -51,10 +51,11 @@ const App = () => {
 	if (!state.loggedIn) {
 		return <Login state={state} onUpdate={onUpdate} />;
 	}
-	return (
-		<div className="App">
-			<NavBar />
-			<Router>
+
+	if (state.id) {
+		return (
+			<div className="App">
+				<NavBar state={state} onUpdate={onUpdate} />
 				<Route
 					path="/home"
 					exact
@@ -78,13 +79,12 @@ const App = () => {
 					path="/workouts"
 					render={() => <Workouts state={state} onUpdate={onUpdate} />}
 				/>
-
 				<Route
-					path="/adminedit"
+					path="adminedit"
 					render={() => <AdminEdit state={state} onUpdate={onUpdate} />}
 				/>
-			</Router>
-		</div>
-	);
+			</div>
+		);
+	}
 };
 export default App;

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import ReorderIcon from "@material-ui/icons/Reorder";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import Register from "./Register";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import updateOnLogin from "../helpers/updateOnLogin";
 import endpoint from "../helpers/endPoint";
 
@@ -26,14 +25,15 @@ const Login = (props) => {
 			email: state.email,
 			password: password,
 		}).then((response) => {
-			console.log("response message was ", response);
-			if (!response.data.message) {
-				onUpdate({ loggedIn: true });
-				updateOnLogin(onUpdate, response.data[0]);
+			console.log('response message was ', response)
+			if(!response.data.message){
+				updateOnLogin(onUpdate, response.data[0])
 				if (response.data[0]?.role === "admin") {
 					history.push("/landing", { name: response.data[0].firstname });
 				}
-			} else {
+				history.push("/home");
+			}
+			else {
 				setLoginStatus(response.data.message);
 			}
 		});

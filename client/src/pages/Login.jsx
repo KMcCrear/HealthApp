@@ -25,15 +25,17 @@ const Login = (props) => {
 			email: state.email,
 			password: password,
 		}).then((response) => {
-			console.log('response message was ', response)
-			if(!response.data.message){
-				updateOnLogin(onUpdate, response.data[0])
-				if (response.data[0]?.role === "admin") {
+			console.log("response message was ", response);
+			if (!response.data.message) {
+				updateOnLogin(onUpdate, response.data[0]);
+				if (
+					response.data[0]?.role === "admin" ||
+					response.data[0]?.role === "user"
+				) {
 					history.push("/landing", { name: response.data[0].firstname });
 				}
 				history.push("/home");
-			}
-			else {
+			} else {
 				setLoginStatus(response.data.message);
 			}
 		});

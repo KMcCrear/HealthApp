@@ -38,12 +38,9 @@ const App = () => {
 				updateOnLogin(onUpdate, response.data.user[0]);
 			}
 		});
-
 	}, [state.loggedIn]);
 
-
-
-	const onUpdate = (object) =>{
+	const onUpdate = (object) => {
 		const newState = _.cloneDeep(state);
 		console.log("updating the state ", object);
 		_.merge(newState, object);
@@ -55,11 +52,10 @@ const App = () => {
 		return <Login state={state} onUpdate={onUpdate} />;
 	}
 
-
-	if (state.id){
+	if (state.id) {
 		return (
 			<div className="App">
-			<NavBar state={state} onUpdate={onUpdate}/>
+				<NavBar state={state} onUpdate={onUpdate} />
 
 				<Route
 					path="/home"
@@ -92,7 +88,5 @@ const App = () => {
 			</div>
 		);
 	}
-
 };
-}
 export default App;

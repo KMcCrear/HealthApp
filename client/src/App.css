@@ -1,275 +1,348 @@
 .App {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .Navbar {
-	background-color: #021e39;
-	width: 100%;
-	height: 80px;
-	font-family: Arial, Helvetica, sans-serif;
-	display: flex;
+  background-color: #021e39;
+  width: 100%;
+  height: 80px;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
 }
 
 .Navbar .leftSide #logo {
-	color: white;
-	margin-left: 15px;
-	margin-right: 15px;
+  color: white;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .Navbar .leftSide {
-	flex: 50%;
-	display: flex;
-	justify-content: left;
-	align-items: center;
+  flex: 50%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
 .Navbar .leftSide .links {
-	max-height: 80px;
+  max-height: 80px;
 }
 
 .Navbar .leftSide .links a {
-	text-decoration: none;
-	color: white;
-	font-size: 25px;
-	margin-left: 15px;
+  text-decoration: none;
+  color: white;
+  font-size: 25px;
+  margin-left: 15px;
 }
 
 .Navbar .leftSide button {
-	display: none;
-	margin-left: 20px;
-	border: none;
-	border-radius: 3px;
+  display: none;
+  margin-left: 20px;
+  border: none;
+  border-radius: 3px;
 }
 
 .Navbar .leftSide #hidden {
-	display: flex;
+  display: flex;
 }
 
 .Navbar .rightSide {
-	flex: 50%;
+  flex: 50%;
 }
 
 @media only screen and (max-width: 850px) {
-	.Navbar .leftSide .links a {
-		font-size: 20px;
-	}
+  .Navbar .leftSide .links a {
+    font-size: 20px;
+  }
 }
 
 @media only screen and (max-width: 750px) {
-	.Navbar .leftSide .links a {
-		font-size: 15px;
-	}
+  .Navbar .leftSide .links a {
+    font-size: 15px;
+  }
 }
 
 @media only screen and (max-width: 650px) {
-	.Navbar .leftSide button {
-		display: flex;
-	}
+  .Navbar .leftSide button {
+    display: flex;
+  }
 
-	.Navbar .leftSide .links {
-		display: none;
-	}
+  .Navbar .leftSide .links {
+    display: none;
+  }
 
-	.Navbar .leftSide #hidden {
-		position: absolute;
-		left: 0px;
-		top: 80px;
-		height: 230px;
-		max-height: 230px;
-		width: 100%;
-		background-color: #021e39;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	.Navbar .leftSide #hidden a {
-		margin: 10px;
-		font-size: 25px;
-	}
+  .Navbar .leftSide #hidden {
+    position: absolute;
+    left: 0px;
+    top: 80px;
+    height: 230px;
+    max-height: 230px;
+    width: 100%;
+    background-color: #021e39;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Navbar .leftSide #hidden a {
+    margin: 10px;
+    font-size: 25px;
+  }
 }
 
 .content {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .content .header {
-	width: 100%;
-	font-family: Arial, Helvetica, sans-serif;
-	box-shadow: 0 50px 70px -20px rgba(238, 238, 238, 0.8);
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow: 0 50px 70px -20px rgba(238, 238, 238, 0.8);
 }
 
 .content .header h1 {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .content .header p {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .content .login .loginContainer {
-	padding: 60px;
-	margin: auto;
-	margin-top: 30px;
-	width: 50%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	background: radial-gradient(
-		rgb(38, 44, 106) 0%,
-		rgba(24, 33, 101, 0.9) 59%,
-		rgba(17, 31, 103, 0.9) 100%
-	);
-	box-shadow: 0 50px 70px -20px rgba(0, 0, 0, 0.8);
+  padding: 60px;
+  margin: auto;
+  margin-top: 30px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: radial-gradient(
+    rgb(38, 44, 106) 0%,
+    rgba(24, 33, 101, 0.9) 59%,
+    rgba(17, 31, 103, 0.9) 100%
+  );
+  box-shadow: 0 50px 70px -20px rgba(0, 0, 0, 0.8);
 }
 
 .content .login .loginContainer label {
-	color: white;
-	margin: 14px 0;
-	display: block;
-	font-size: 22px;
-	line-height: 1;
-	font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  margin: 14px 0;
+  display: block;
+  font-size: 22px;
+  line-height: 1;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .content .login .loginContainer input {
-	width: 100%;
-	border: none;
-	outline: none;
-	font-size: 19px;
-	padding: 10px;
-	background: rgba(255, 255, 255, 0.1);
-	color: #fff;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 19px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .content .login .loginContainer .buttonContainer {
-	width: 100%;
-	padding: 24px 0;
+  width: 100%;
+  padding: 24px 0;
 }
 
 .content .login .buttonContainer button {
-	border: none;
-	outline: none;
-	width: 100%;
-	padding: 15px 0;
-	color: rgb(0, 0, 0);
-	margin-left: 10px;
-	font-size: 16px;
-	letter-spacing: 1px;
-	background-color: #f1f1f2;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 15px 0;
+  color: rgb(0, 0, 0);
+  margin-left: 10px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  background-color: #f1f1f2;
 }
 
 .content .login .buttonContainer p span a {
-	color: yellow;
-	font-weight: 500;
-	letter-spacing: 0.5px;
-	margin-left: 5px;
-	cursor: pointer;
-	transition: all 400ms ease-in-out;
+  color: yellow;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: all 400ms ease-in-out;
 }
 
 .content .login .buttonContainer p span a:hover {
-	color: red;
+  color: red;
 }
 
 .content .login .buttonContainer p span a:visited {
-	color: yellow;
+  color: yellow;
 }
 
 .content .login .buttonContainer #loginStatus {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-	margin-bottom: 0px;
-	font-size: 20px;
-	font-family: Arial, Helvetica, sans-serif;
-	color: yellow;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: yellow;
 }
 
 .Container .landingContainer .leftsideHeading {
-	height: 100%;
-	margin-left: 10px;
-	font-size: 20px;
-	font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  margin-left: 10px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .Container .landingContainer .excerciseActivities {
-	width: 100%;
+  width: 100%;
 }
 
 .Container .landingContainer .excerciseActivities .activity {
-	display: flex;
-	flex-direction: row;
-	justify-items: center;
-	margin-top: 50px;
-	width: 100%;
-	height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  margin-top: 50px;
+  width: 100%;
+  height: 100px;
 }
 
 .Container .landingContainer .excerciseActivities .activity button {
-	padding: 10px;
-	padding: 20px;
-	margin-left: 10px;
-	height: 200px;
-	width: 200px;
-	font-size: 30px;
-	outline: none;
-	justify-content: stretch;
-	border: none;
-	border-radius: 10px;
-	background: radial-gradient(
-		rgb(225, 225, 230) 0%,
-		rgba(245, 245, 250, 0.9) 59%,
-		rgba(240, 241, 245, 0.9) 100%
-	);
+  padding: 10px;
+  padding: 20px;
+  margin-left: 10px;
+  height: 200px;
+  width: 200px;
+  font-size: 30px;
+  outline: none;
+  justify-content: stretch;
+  border: none;
+  border-radius: 10px;
+  background: radial-gradient(
+    rgb(225, 225, 230) 0%,
+    rgba(245, 245, 250, 0.9) 59%,
+    rgba(240, 241, 245, 0.9) 100%
+  );
 }
 
 .activities .activityDivs {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .activities .activityDivs .activityLinks {
-	border: solid;
-	border-width: 1px;
-	margin-left: 15px;
-	padding: 5px;
-	width: 70px;
-	height: 70px;
-	justify-items: center;
-	align-content: center;
-	color: black;
-	text-decoration: none;
+  border: solid;
+  border-width: 1px;
+  margin-left: 15px;
+  padding: 5px;
+  width: 70px;
+  height: 70px;
+  justify-items: center;
+  align-content: center;
+  color: black;
+  text-decoration: none;
 }
 
 .activities .activityDivs .activityLinks:hover {
-	font-weight: bold;
-	border-width: 5px;
-	height: 100px;
-	width: 130px;
-	font-size: 30px;
-	padding: 10px;
-	margin-left: 30px;
+  font-weight: bold;
+  border-width: 5px;
+  height: 100px;
+  width: 130px;
+  font-size: 30px;
+  padding: 10px;
+  margin-left: 30px;
 }
 
 .workoutDetails {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .workoutDetails .workoutForm {
-	flex-direction: column;
+  flex-direction: column;
+}
+
+.Profile {
+  border-radius: 25px;
+  border: 2px solid #463aaf;
+  padding: 20px;
+  width: 200px;
+  height: 150px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 480px) {
+  .Profile {
+    width: 70%;
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .Profile {
+    width: 70%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .Profile {
+    width: 70%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .Profile {
+    width: 70%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .Profile {
+    width: 70%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .Profile {
+    width: 70%;
+  }
+}
+
+#AdditionalInformation {
+  position: absolute;
+  bottom: 400px;
+}
+
+#Show {
+  display: block;
+}
+
+#UpdateButton {
+  position: absolute;
+  bottom: 100px;
+}
+
+#SaveButton {
+  position: absolute;
+  bottom: 200px;
+}
+
+#label {
+  padding-bottom: 30px;
 }

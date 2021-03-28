@@ -29,8 +29,8 @@ USE HealthApp;
 --
 DROP TABLE  IF EXISTS `users`;
 
-CREATE TABLE IF NOT EXISTS`users` (
-  `id` int(11) PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `firstname` varchar(512) NOT NULL,
   `surname` varchar(512) NOT NULL,
   `email` varchar(512) NOT NULL,
@@ -56,18 +56,42 @@ CREATE TABLE IF NOT EXISTS `reminders`(
 DROP TABLE  IF EXISTS `activities`;
 
 CREATE TABLE `activities` (
-  `id` int(1) NOT NULL,
+  `id` int(1) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `activityName` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE  IF EXISTS `profile`;
+
+CREATE TABLE IF NOT EXISTS `profile` (
+  `profileId` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+  `Age` varchar(512),
+  `Sex` varchar(512),
+  `Height` varchar(512),
+  `Weight` varchar(512), 
+  `BloodType` varchar(512),
+  `BloodPressure` varchar(512),
+  `Diabetic` varchar(512),
+  `Disabilities` varchar(512),
+  `userid` int(11) NOT NULL,
+  CONSTRAINT `fk_userid` 
+  FOREIGN KEY (`userid`) REFERENCES `users`(`id`)
+  ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
 --
 -- Dumping data for table `activities`
 --
+INSERT INTO `profile` (`userid`)
+SELECT `id`
+FROM `users`;
+
 
 INSERT INTO `activities` (`id`, `activityName`) VALUES
 (1, 'Outdoor Run'),
 (3, 'Swimming'),
 (4, 'Cycling');
+
+
  INSERT INTO `users` (`id`, `firstname`, `surname`, `email`, `password`, `role`) VALUES
 (1, 'Kyle', 'McCrear', 'test@gmail.com', 'test', 'user'),
 (2, 'test', 'test', 'test123@gmail.com', '$2b$10$u6dT/I4crqKcrVnum98Dk.gBGWN.dyNquSxK4xWcJtgokfxRodiJ6', 'user'),
@@ -75,6 +99,8 @@ INSERT INTO `activities` (`id`, `activityName`) VALUES
 (6, 'TEst', 'test', 'test@dsfsd', '$2b$10$PsBTvi7Kv7pubDesDxmy2ukoA1C38JTu4FDni1phXVYq2yfcc3J3e', 'user'),
 (7, 'asdasd', '', '', '$2b$10$y7wXJYCZ6lG5EJQQl0K8HOAi20yA1tePHCMnO1vzZp9UWZSq6pLXm', 'user'),
 (12, 'admin', 'admin', 'admin@gcuhealth.co.uk', '$2b$10$neyGefUfXF.7aKtJvVxDD.Amx1D/lTfsS3X5q9r7gq2xw8y9MoBke', 'admin');
+
+
 INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES (1, 13, 'reminder in db lmao','01/01/2040' ,'4:20pm','idk some st.');
 --
 -- Indexes for dumped tables
@@ -91,14 +117,6 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 --
 -- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-  
-ALTER TABLE `activities`
-  ADD PRIMARY KEY (`id`);
-ALTER TABLE `activities`
-  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

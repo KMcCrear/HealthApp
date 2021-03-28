@@ -14,12 +14,12 @@ const serverPort = 3001;
 const app = express();
 
 app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header(
-		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept"
-	);
-	next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
 });
 app.use(express.json());
 
@@ -28,11 +28,11 @@ credentials need to be set to true for the cookie to work, needs to be
 set on the front-end too.
 */
 app.use(
-	cors({
-		origin: ["http://localhost:3000"],
-		methods: ["GET", "POST"],
-		credentials: true,
-	})
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
 );
 
 //allows the app to use cookies
@@ -43,139 +43,239 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /*This sets up the session the cookie uses
 a key and a secret need to be set*/
 app.use(
-	session({
-		key: "userId",
-		secret: "cookieSecret",
-		resave: false,
-		saveUninitialized: false,
-		cookie: {
-			expires: 60 * 60 * 24,
-		},
-	})
+  session({
+    key: "userId",
+    secret: "cookieSecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60 * 24,
+    },
+  })
 );
 
 const db = mysql.createConnection({
-	user: "root",
-	host: "localhost",
-	password: "",
-	database: "HealthApp",
+  user: "root",
+  host: "localhost",
+  password: "",
+  database: "HealthApp",
 });
 
 app.post("/register", (req, res) => {
-	const firstname = req.body.firstname;
-	const surname = req.body.surname;
-	const email = req.body.email;
-	const password = req.body.password;
-	bcrypt.hash(password, saltRounds, (err, hash) => {
-		if (err) {
-			console.log(err);
-		}
+  const firstname = req.body.firstname;
+  const surname = req.body.surname;
+  const email = req.body.email;
+  const password = req.body.password;
+  const id = req.body.id;
 
-		db.query(
-			"INSERT INTO users(firstname, surname, email, password) VALUES (? ,? ,? ,?)",
-			[firstname, surname, email, hash],
-			(err, result) => {
-				if (err) {
-					console.log(err);
-					res.send({ message: "Registration unsuccessful" });
-				} else {
-					req.session.user = result;
-					res.send(result);
-				}
-			}
-		);
-	});
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+
+    db.query(
+      "INSERT INTO users(firstname, surname, email, password) VALUES (? ,? ,? ,?)",
+      [firstname, surname, email, hash],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          res.send({ message: "Registration unsuccessful" });
+        } else {
+          req.session.user = result;
+          res.send(result);
+        }
+      }
+    );
+
+    db.query(
+      "INSERT INTO profile(userid) SELECT users.id FROM users WHERE NOT EXISTS(SELECT id FROM profile WHERE profile.userid = users.id)",
+      [id],
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  });
 });
 
-/*This is a GET method, checks to see if the use is logged in
+/*This is a GET method, checks to see if the user is logged in
 sends info on if the user is logged in to the front end.*/
 
 app.get("/login", (req, res) => {
-	if (req.session.user) {
-		res.send({ loggedIn: true, user: req.session.user });
-	} else {
-		res.send({ loggedIn: false });
-	}
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
 });
 
-app.get('/home/reminders-get', (req, res)=>{
-	const userId = req.query.userId;
-	console.log('USER QUERY IS ', req.query);
-	db.query(`SELECT * FROM reminders WHERE userid = ${userId};`, (err, result)=>{
-		if(err){
-			res.send({err: err});
-		} else {
-			res.send(result)
-		}
-	})
-})
+app.get("/home/reminders-get", (req, res) => {
+  const userId = req.query.userId;
+  console.log("USER QUERY IS ", req.query);
+  db.query(
+    `SELECT * FROM reminders WHERE userid = ${userId};`,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 
-app.post('/home/reminders-add', (req, res)=>{
-	const info = req.body.info;
-	const date = req.body.date;
-	const location = req.body.location;
-	const time = req.body.time;
-	const userid = req.body.userId;
+app.post("/home/reminders-add", (req, res) => {
+  const info = req.body.info;
+  const date = req.body.date;
+  const location = req.body.location;
+  const time = req.body.time;
+  const userid = req.body.userId;
 
-	db.query(`INSERT INTO reminders(userid, info, date, time, location) VALUES(?, ?, ?, ?, ?)`,[userid, info, date, time, location], (err, result)=>{
-		if(err){
-			console.log(err);
-		} else {
-			res.send(result);
-		}
-	})
-})
-app.post('/home/reminders-delete', (req, res)=>{
-	const id = req.body.id;
-	db.query(`DELETE FROM reminders where id = ${id}`, (err,result)=>{
-		if(err){
-			console.log(err);
-		} else{
-			res.send(result);
-		}
-	})
-})
+  db.query(
+    `INSERT INTO reminders(userid, info, date, time, location) VALUES(?, ?, ?, ?, ?)`,
+    [userid, info, date, time, location],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/home/reminders-delete", (req, res) => {
+  const id = req.body.id;
+  db.query(`DELETE FROM reminders WHERE id = ${id}`, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 
 app.post("/login", (req, res) => {
-	const password = req.body.password;
-	const email = req.body.email;
-	console.log("response is ", res);
+  const password = req.body.password;
+  const email = req.body.email;
+  console.log("response is ", res);
 
-	db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
-		if (err) {
-			res.send({ err: err });
-		} else {
-			if (result.length > 0) {
-				bcrypt.compare(password, result[0].password, (error, response) => {
-					if (response) {
-						req.session.user = result;
-						res.send(result);
-					} else {
-						res.send({ message: "Wrong Email/Password" });
-					}
-				});
-			} else {
-				res.send({ message: "User dosen't exist" });
-			}
-		}
-	});
+  db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
+    if (err) {
+      res.send({ err: err });
+    } else {
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].password, (error, response) => {
+          if (response) {
+            req.session.user = result;
+            res.send(result);
+          } else {
+            res.send({ message: "Wrong Email/Password" });
+          }
+        });
+      } else {
+        res.send({ message: "User dosen't exist" });
+      }
+    }
+  });
 });
 
 app.get("/loadActivity", (req, res) => {
-	console.log(res);
-	db.query("SELECT * FROM activities;", (err, result) => {
-		if (err) {
-			res.send({ Error: err });
-		} else {
-			if (result.length > 0) {
-				req.session.activtyName = result;
-				console.log(result);
-				res.send(result);
-			}
-		}
-	});
+  console.log(res);
+  db.query("SELECT * FROM activities;", (err, result) => {
+    if (err) {
+      res.send({ Error: err });
+    } else {
+      if (result.length > 0) {
+        req.session.activtyName = result;
+        console.log(result);
+        res.send(result);
+      }
+    }
+  });
+});
+
+app.post("/profile", (req, res) => {
+  const age = req.body.age;
+  const sex = req.body.sex;
+  const height = req.body.height;
+  const weight = req.body.weight;
+  const bloodPressure = req.body.bloodpressure;
+  const diabetic = req.body.diabetic;
+  const bloodType = req.body.bloodtype;
+  const disabilities = req.body.disabilities;
+  const userId = req.body.userId;
+  console.log("USER QUERY IS ", req.body);
+
+  db.query(
+    `UPDATE profile SET Age = ?, Sex = ?, Height = ?, Weight = ?, BloodType = ?, BloodPressure = ?, Diabetic = ?, Disabilities = ? WHERE userid = ${userId};`,
+    [
+      age,
+      sex,
+      height,
+      weight,
+      bloodType,
+      bloodPressure,
+      diabetic,
+      disabilities,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.get("/profile", (req, res) => {
+  const age = req.body.age;
+  const sex = req.body.sex;
+  const height = req.body.height;
+  const weight = req.body.weight;
+  const bloodtype = req.body.bloodtype;
+  const bloodpressure = req.body.bloodpressure;
+  const diabetic = req.body.diabetic;
+  const disabilities = req.body.disabilities;
+  const userId = req.query.userId;
+  console.log("USER QUERY IS ", req.query);
+
+  db.query(
+    `SELECT Age, Sex, Height, Weight, BloodType, BloodPressure, Diabetic, Disabilities FROM profile WHERE userid = ${userId};`,
+    [
+      age,
+      sex,
+      height,
+      weight,
+      bloodtype,
+      bloodpressure,
+      diabetic,
+      disabilities,
+    ],
+
+    (err, result) => {
+      if (err) {
+        res.send({ Error: err });
+      } else {
+        if (result.length > 0) {
+          req.session.Age = result;
+          req.session.Sex = result;
+          req.session.Height = result;
+          req.session.Weight = result;
+          req.session.BloodType = result;
+          req.session.BloodPressure = result;
+          req.session.Diabetic = result;
+          req.session.Disabilities = result;
+          console.log(result);
+          res.send(result);
+        }
+      }
+    }
+  );
 });
 
 app.listen(serverPort, () => {
-	console.log(`Server running on port ${serverPort}`);
+  console.log(`Server running on port ${serverPort}`);
 });

@@ -23,6 +23,7 @@ const App = () => {
 		firstname: null,
 		surname: null,
 		message: null,
+		role: null,
 		reminders: [],
 	});
 	Axios.defaults.withCredentials = true;
@@ -82,7 +83,7 @@ const App = () => {
 				/>
 
 				<Route
-					path="adminedit"
+					path="/adminedit"
 					render={() => <AdminEdit state={state} onUpdate={onUpdate} />}
 				/>
 			</div>

@@ -97,9 +97,9 @@ app.get("/login", (req, res) => {
 		res.send({ loggedIn: false });
 	}
 });
-app.put('/logout', (req,res)=>{
+app.put("/logout", (req, res) => {
 	req.session.destroy();
-})
+});
 app.get("/home/reminders-get", (req, res) => {
 	const userId = req.query.userId;
 	console.log("USER QUERY IS ", req.query);

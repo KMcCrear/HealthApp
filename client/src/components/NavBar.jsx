@@ -22,25 +22,6 @@ function NavBar(props) {
 		} else setShowAdmin("");
 	}, [state.role]);
 
-	// const AdminResult = () => {
-	// 	<div className="links" id={showLinks ? "hidden" : ""}>
-	// 		<a href="/home">Home</a>
-	// 		<a href="/activities">Activities</a>
-	// 		<a href="/profile">Profile</a>
-	// 		<a href="/covidtracking">Covid-19</a>
-	// 		<a href="/adminedit">Admin</a>
-	// 	</div>;
-	// };
-
-	// const Result = () => {
-	// 	<div className="links" id={showLinks ? "hidden" : ""}>
-	// 		<a href="/home">Home</a>
-	// 		<a href="/activities">Activities</a>
-	// 		<a href="/profile">Profile</a>
-	// 		<a href="/covidtracking">Covid-19</a>
-	// 	</div>;
-	// };
-
 	return (
 		<div>
 			<div className="Navbar">

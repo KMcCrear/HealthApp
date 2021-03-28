@@ -75,16 +75,6 @@ const Profile = (props) => {
     setProfData(Data);
   };
 
-  const update = () => {
-    var details = document.getElementById("Show");
-
-    if (details.style.display === "none") {
-      details.style.display = "block";
-    } else {
-      details.style.display = "none";
-    }
-  };
-
   return (
     <div className="Container">
       <div>
@@ -168,11 +158,6 @@ const Profile = (props) => {
         <div className="buttonContainer">
           <button onClick={enterData} id="SaveButton">
             SAVE
-          </button>
-        </div>
-        <div className="buttonContainer">
-          <button onclick={update} id="UpdateButton">
-            Update Details
           </button>
         </div>
       </div>

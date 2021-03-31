@@ -84,6 +84,14 @@ app.post("/register", (req, res) => {
 				}
 			}
 		);
+		db.query(
+			"INSERT INTO userdetails(userid) FROM users(id)",
+			(err, result) => {
+				if (err) {
+					console.log(err);
+				}
+			}
+		);
 	});
 });
 
@@ -267,6 +275,53 @@ app.post("/deleteworkout", (req, res) => {
 			} else {
 				console.log(result);
 				res.send(result);
+			}
+		}
+	);
+});
+
+app.post("/getUserDetails", (req, res) => {
+	const id = req.body.id;
+
+	db.query(`SELECT * FROM userdetails WHERE userid = ${id}`, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.send({ mesage: err });
+		} else {
+			console.log(result);
+			res.send(result);
+		}
+	});
+});
+
+app.post("/updateUserDetails", (req, res) => {
+	const id = req.body.id;
+	const firstName = req.body.firstName;
+	const surName = req.body.surName;
+	const email = req.body.email;
+	const age = req.body.age;
+	const contact = req.body.emergeContact;
+	const gender = req.body.gender;
+	const bloodType = req.body.bloodType;
+	const isDiabetic = req.body.isDiabetic;
+
+	db.query(
+		`UPDATE userdetails SET firstname = "${firstName}", surname = '${surName}', email = '${email}', age = ${age}, contact = ${contact}, gender = '${gender}', bloodtype = '${bloodType}', isdiabetic = '${isDiabetic}' WHERE userid = ${id};`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				res.send({ error: err });
+			} else {
+				res.send(result);
+			}
+		}
+	);
+
+	db.query(
+		`UPDATE users SET firstname = "${firstName}", surname = "${surName}", email = "${email}" WHERE id = ${id};`,
+		(err, result) => {
+			if (err) {
+				console.log(err);
 			}
 		}
 	);

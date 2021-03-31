@@ -53,16 +53,16 @@ CREATE TABLE IF NOT EXISTS `reminders`(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE  IF EXISTS `workouts`;
-CREATE TABLE IF NOT EXISTS `workouts`(
-  `id` int(11) NOT NUll AUTO_INCREMENT,
-  PRIMARY KEY (`id`),
+CREATE TABLE `workouts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY(`id`),
   `userid` int(11) NOT NULL,
   `workoutname` varchar(512) NOT NULL,
-  `totaltime` varchar(20),
-  `distance` int(20),
-  `calories` int(20),
-  `avgheartrate` int(20),
-  `loaction` varchar(512)
+  `totaltime` varchar(20) DEFAULT NULL,
+  `distance` int(20) DEFAULT NULL,
+  `calories` int(20) DEFAULT NULL,
+  `avgheartrate` int(20) DEFAULT NULL,
+  `location` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE  IF EXISTS `activities`;
@@ -95,7 +95,19 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 --
 -- Indexes for table `users`
 --
-
+DROP TABLE  IF EXISTS `userdetails`;
+CREATE TABLE `userdetails` (
+  `userid` int(11) NOT NULL,
+  PRIMARY KEY (`userid`),
+  `firstname` varchar(512) DEFAULT NULL,
+  `surname` varchar(512) DEFAULT NULL,
+  `email` varchar(512) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `contact` bigint(255) DEFAULT NULL,
+  `gender` varchar(512) DEFAULT NULL,
+  `bloodtype` varchar(512) DEFAULT NULL,
+  `isdiabetic` varchar(512) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -104,14 +116,14 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-  
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13; 
 ALTER TABLE `activities`
   ADD PRIMARY KEY (`id`);
 ALTER TABLE `activities`
   MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+ALTER TABLE `userdetails`
+  ADD CONSTRAINT `fk_id` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT; CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

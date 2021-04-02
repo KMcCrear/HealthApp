@@ -98,9 +98,9 @@ DROP TABLE  IF EXISTS `userdetails`;
 CREATE TABLE `userdetails` (
   `userid` int(11) NOT NULL,
   `age` int(11) DEFAULT NULL,
-  `contact` bigint(255) DEFAULT NULL,
   `weight` int(4) DEFAULT NULL,
   `height` int(4) DEFAULT NULL,
+  `contact` bigint(255) DEFAULT NULL,
   `gender` varchar(512) DEFAULT NULL,
   `bloodtype` varchar(512) DEFAULT NULL,
   `isdiabetic` varchar(512) DEFAULT NULL

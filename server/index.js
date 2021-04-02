@@ -97,9 +97,11 @@ app.get("/login", (req, res) => {
 		res.send({ loggedIn: false });
 	}
 });
+
 app.put("/logout", (req, res) => {
 	req.session.destroy();
 });
+
 app.get("/home/reminders-get", (req, res) => {
 	const userId = req.query.userId;
 	console.log("USER QUERY IS ", req.query);
@@ -113,6 +115,23 @@ app.get("/home/reminders-get", (req, res) => {
 			}
 		}
 	);
+});
+
+app.post('/editTable', (req,res)=>{
+	const table = req.body.table;
+	const field = req.body.field;
+	const value = req.body.value;
+	const userId = req.body.userId;
+
+	const idField = (table==='users') ? 'id' : 'userid';
+
+	db.query(`UPDATE ${table} SET ${field}='${value}' WHERE ${idField}=${userId}`, (err,result)=>{
+		if(err){
+			console.log(err);
+		} else {
+			res.send(result);
+		}
+	})
 });
 
 app.post("/home/reminders-add", (req, res) => {
@@ -134,6 +153,7 @@ app.post("/home/reminders-add", (req, res) => {
 		}
 	);
 });
+
 app.post("/home/reminders-delete", (req, res) => {
 	const id = req.body.id;
 	db.query(`DELETE FROM reminders where id = ${id}`, (err, result) => {

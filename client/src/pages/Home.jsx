@@ -1,16 +1,19 @@
-import "antd/dist/antd.css";
+//import "antd/dist/antd.css";
 import Axios from "axios";
 import endpoint from '../helpers/endPoint';
 import React, {useEffect, useState} from "react";
 import _ from 'lodash';
 import {Row, Col, Table, Space, Button, Modal, Input, Form, TimePicker, DatePicker} from 'antd';
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import getLocation from '../helpers/getLocation';
+import getCovidData from '../helpers/getCovidData';
 
 const Home=(props)=> {
 
 	const {onUpdate, state} = props;
 	const [tableData, setTableData] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
+	const [location, setLocation ]= useState(null);
 	const emptyRow = {
 		info: '',
 		time: '',
@@ -102,6 +105,34 @@ const Home=(props)=> {
 		setModalVisible(false)
 	}
 
+	const setNewLocation = ()=>{
+		const newLocation = getLocation();
+		console.log('location in home is ', newLocation )
+		setLocation(newLocation);
+	}
+
+
+	const renderNoLocation = () =>{
+		console.log('render new loc')
+		return (
+			<>
+			{!location && (				
+				<>
+					<h3>No location data available</h3> 
+					<Button onClick={()=>setNewLocation()}> Find my location </Button>		
+					<br/>
+					<h3>Or search it manually</h3>	
+					<Input placeholder = {'Type city e.g. Manchester '}/>
+				</>
+			)}
+			{location && (
+				<>
+					<p>Do you want to set your location to <span color='red'>{location}</span></p>
+				</>
+			)}
+			</>
+		)
+	}
 	return(
 		<>
 		<Row>
@@ -111,12 +142,10 @@ const Home=(props)=> {
 					dataSource={tableData} 
 					columns={tableColumns} 
 					scroll={{y:400}}
+					bordered={true}
 					pagination={false}
 					size={'small'}
 				/>			
-			</Col>
-		</Row>
-		<Col span={9}>
 			<Button
 				type="dashed"
 				onClick={() => {
@@ -124,8 +153,20 @@ const Home=(props)=> {
 				}}
 				style={{ width: '100%'}}
 				icon={<PlusOutlined />}
-			> Add a row </Button>
-		</Col>
+			> Add a row 
+			</Button>
+			</Col>
+			<Col span={0.7}>
+				<>
+				</>
+			</Col>
+			<Col span={9}>
+				<h1> Covid information near you </h1>
+				<div class='rectangle'>
+					{!state.userLocation && renderNoLocation()}
+				</div>
+			</Col>
+		</Row>
 
 		<Modal visible={modalVisible} onCancel={()=>{modalOnCancel()}} onOk={()=>{modalOnOk()}}>
 				<Form>

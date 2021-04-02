@@ -32,8 +32,9 @@ const  Register = (props) => {
 				if (response.data.message) {
 					setRegisterStatus(response.data.message);
 				} else {
+					console.log('data is ', data);
 					setRegisterStatus("Welcome Registration Successful");
-					updateOnLogin(onUpdate, data);
+					//updateOnLogin(onUpdate, data);
 				}
 			});
 		}

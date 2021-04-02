@@ -20,6 +20,7 @@ const App = () => {
 		loggedIn: false,
 		id: null,
 		email: null,
+		userLocation: null,
 		firstname: null,
 		surname: null,
 		message: null,

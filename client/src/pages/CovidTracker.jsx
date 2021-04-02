@@ -1,45 +1,35 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-
+import getCovidData from '../helpers/getCovidData';
+import test from '../helpers/test';
 export default function CovidTracker() {
-	const [covidDate, setDate] = useState();
-	const [newCases, setNewCases] = useState();
 	const [location, setLocation] = useState("");
-	const [covidData, setCovidData] = useState();
-
-	async function getData() {
-		if (location == "") {
-			setDate("Please Enter a Valid Location");
-		} else {
-			await fetch(
-				"https://api.coronavirus.data.gov.uk/v1/data?" +
-					`filters=areaType=nation;areaName=${location}&` +
-					'structure={"date":"date","newCases":"newCasesByPublishDate", "newCasesByPublishDate":"newCasesByPublishDate"}'
-			).then((response) =>
-				response
-					.json()
-					.then((data) => ({
-						data: data,
-					}))
-					.then((res) => {
-						const dataArray = res.data.data;
-						let firstTen = dataArray.slice(0, 10);
-						mapInfo(firstTen);
-					})
-			);
-		}
+	const [covidData, setCovidData] = useState('');
+	const [covidTable, setCovidTable] = useState();
+	const getData= async()=>{
+		const data = await getCovidData(location)
+		console.log('data is again ', data)
+		setCovidData(data)
 	}
+	console.log('covid data ', covidData);
+	useEffect(()=>{
+		if(!covidData){
+			return;
+		}
+		mapInfo(covidData)
+	},[covidData]);
 
 	const mapInfo = (firstTen) => {
+		console.log('calling map info')
 		let mappedInfo = firstTen.map((data) => (
 			<div className="covidData" key={data.date}>
-				Data: {data.date} <br />
-				Number of Cases: {data.newCases}
+				Date: {data.date} <br />
+				Number of Cases: {data.cases.daily || 'No information!'} <br />
+				Number of Deaths: {data.cases.deaths || 'No information!'}
 			</div>
 		));
-		setCovidData(mappedInfo);
+		setCovidTable(mappedInfo);
 	};
-
 	return (
 		<div>
 			<div className="Container">
@@ -61,7 +51,7 @@ export default function CovidTracker() {
 						/>
 						<button onClick={getData}>Click</button>
 					</div>
-					<div className="loadedData">{covidData}</div>
+					<div className="loadedData">{covidTable}</div>
 				</div>
 			</div>
 		</div>

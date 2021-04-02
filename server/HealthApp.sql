@@ -54,8 +54,7 @@ CREATE TABLE IF NOT EXISTS `reminders`(
 
 DROP TABLE  IF EXISTS `workouts`;
 CREATE TABLE `workouts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-   PRIMARY KEY(`id`),
+  `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `workoutname` varchar(512) NOT NULL,
   `totaltime` varchar(20) DEFAULT NULL,
@@ -98,19 +97,19 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 DROP TABLE  IF EXISTS `userdetails`;
 CREATE TABLE `userdetails` (
   `userid` int(11) NOT NULL,
-  PRIMARY KEY (`userid`),
-  `firstname` varchar(512) DEFAULT NULL,
-  `surname` varchar(512) DEFAULT NULL,
-  `email` varchar(512) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `contact` bigint(255) DEFAULT NULL,
+  `weight` int(4) DEFAULT NULL,
+  `height` int(4) DEFAULT NULL,
   `gender` varchar(512) DEFAULT NULL,
   `bloodtype` varchar(512) DEFAULT NULL,
   `isdiabetic` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
---
 -- AUTO_INCREMENT for dumped tables
 --
+ALTER TABLE `userdetails`
+  ADD PRIMARY KEY (`userid`),
+  ADD KEY `userid` (`userid`);
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -122,8 +121,10 @@ ALTER TABLE `activities`
 ALTER TABLE `activities`
   MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
+ALTER TABLE `workouts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 ALTER TABLE `userdetails`
-  ADD CONSTRAINT `fk_id` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT; CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+  ADD CONSTRAINT `id_fk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+COMMIT;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

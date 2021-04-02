@@ -4,24 +4,29 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Axios from "axios";
 import endpoint from "../helpers/endPoint";
+import updateOnLogin from "../helpers/updateOnLogin";
 
 export default function Profile(props) {
 	const { state, onUpdate } = props;
-	const [firstName, setFirstName] = useState(" ");
-	const [surname, setSurname] = useState(" ");
-	const [email, setEmail] = useState(" ");
-	const [age, setAge] = useState(0);
-	const [contact, setContact] = useState(0);
-	const [gender, setGender] = useState(" ");
-	const [bloodType, setBloodType] = useState(" ");
-	const [isDiabetic, setDiabetic] = useState(" ");
+	const [age, setAge] = useState();
+	const [contact, setContact] = useState();
+	const [gender, setGender] = useState();
+	const [bloodType, setBloodType] = useState();
+	const [isDiabetic, setDiabetic] = useState();
+	const [disability, setDisability] = useState();
+	const [weight, setWeight] = useState();
+	const [height, setHeight] = useState();
+
+	const [userDetails, setUserDetails] = useState();
 
 	const data = {
 		id: state.id,
-		firstName: firstName,
-		surName: surname,
-		email: email,
+		firstName: state.firstname,
+		surName: state.surname,
+		email: state.email,
 		age: age,
+		height: height,
+		weight: weight,
 		emergeContact: contact,
 		gender: gender,
 		bloodType: bloodType,
@@ -35,29 +40,119 @@ export default function Profile(props) {
 					alert("Error Loading User Details");
 				} else {
 					console.log(response.data);
-					setFirstName(response.data.firstname);
-					setSurname(response.data.surname);
-					//setEmail(response.data.email);
-					setAge(response.data.age);
-					setContact(response.data.contact);
-					setGender(response.data.gender);
-					setBloodType(response.data.bloodtype);
-					setDiabetic(response.data.isdiabetic);
+					let userData = response.data;
+					displayUserData(userData);
 				}
 			}
 		);
 	}, [state.id]);
 
 	const updataUserDetails = () => {
-		Axios.post(`${endpoint()}/updateUserDetails`, data).then((response) => {
-			if (response.data.error) {
-				console.log(response.data.error);
-				alert("Details Failed to Update");
-			} else {
-				alert("Details Successfully Updated");
-			}
-		});
+		if (!state.firstname || !state.surname || !state.email) {
+			alert("Error! Firstname, Surname and Email Can't be Empty");
+		} else {
+			//updateOnLogin(onUpdate, data);
+			Axios.post(`${endpoint()}/updateUserDetails`, data).then((response) => {
+				if (response.data.error) {
+					console.log(response.data.error);
+					alert("Details Failed to Update");
+				} else {
+					alert("Details Successfully Updated");
+				}
+			});
+		}
 	};
+
+	const displayUserData = (userData) => {
+		let mappedUserData = userData.map((user) => (
+			<div className="currentUserData" key={user.id}>
+				<fieldset>
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Firstname"
+						disabled={true}
+						defaultValue={state.firstname}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Surname"
+						disabled={true}
+						defaultValue={state.surname}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Email"
+						disabled={true}
+						defaultValue={state.email}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Age"
+						disabled={true}
+						defaultValue={user.age}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Emergancy Contact"
+						disabled={true}
+						defaultValue={user.contact}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Gender"
+						disabled={true}
+						defaultValue={user.gender}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Blood Type"
+						disabled={true}
+						defaultValue={user.bloodtype}
+					/>
+					<br />
+					<TextField
+						className="inputField"
+						id="outlined-basic"
+						variant="outlined"
+						type="text"
+						label="Diabetic"
+						disabled={true}
+						defaultValue={user.isdiabetic}
+					/>
+					<br />
+				</fieldset>
+			</div>
+		));
+		setUserDetails(mappedUserData);
+	};
+
 	return (
 		<div className="profileContainer">
 			<div className="profile">
@@ -66,47 +161,71 @@ export default function Profile(props) {
 						<h1>User Profile</h1>
 					</header>
 				</div>
+				<div className="loadedUserDetails">
+					<h3>Current Health Details</h3>
+					{userDetails}
+				</div>
 				<div className="userProfile">
+					<h3>Update Details</h3>
 					<form>
 						<TextField
+							className="inputField"
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
 							label="First Name"
-							defaultValue={firstName}
-							onChange={(e) => setFirstName(e.target.value)}
+							onChange={(e) => onUpdate({ firstname: e.target.value })}
 						/>
 						<br />
 						<TextField
+							className="inputField"
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
 							label="Surname Name"
-							defaultValue={surname}
-							onChange={(e) => setSurname(e.target.value)}
+							onChange={(e) => onUpdate({ surname: e.target.value })}
 						/>
 						<br />
 
 						<TextField
+							className="inputField"
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
 							label="Email"
 							pattern="@$"
-							value={email}
-							onChange={(e) => setEmail(e.target.value.trim())}
+							onChange={(e) => onUpdate({ email: e.target.value })}
 						/>
 						<br />
 						<TextField
+							className="inputField"
 							id="outlined-basic"
 							variant="outlined"
 							type="number"
 							label="age"
-							defaultValue={age}
 							onChange={(e) => setAge(e.target.value)}
 						/>
 						<br />
 						<TextField
+							className="inputField"
+							id="outlined-basic"
+							variant="outlined"
+							type="text"
+							label="Height (cm)"
+							onChange={(e) => setHeight(e.target.value)}
+						/>
+						<br />
+						<TextField
+							className="inputField"
+							id="outlined-basic"
+							variant="outlined"
+							type="text"
+							label="Weight (kg)"
+							onChange={(e) => setWeight(e.target.value)}
+						/>
+						<br />
+						<TextField
+							className="inputField"
 							id="outlined-basic"
 							variant="outlined"
 							type="tel"
@@ -116,8 +235,8 @@ export default function Profile(props) {
 						/>
 						<br />
 						<NativeSelect
+							className="inputField"
 							id="genderSelect"
-							defaultValue={gender}
 							onChange={(e) => setGender(e.target.value)}
 						>
 							<option defaultValue=""></option>
@@ -125,10 +244,22 @@ export default function Profile(props) {
 							<option>Female</option>
 							<option>Other</option>
 						</NativeSelect>
+						<br />
 						<NativeSelect
+							className="inputField"
+							id="disability"
+							label="Do You have a Disability?"
+							onChange={(e) => setDisability(e.target.value)}
+						>
+							<option defaultValue=""></option>
+							<option>Yes</option>
+							<option>No</option>
+						</NativeSelect>
+						<br />
+						<NativeSelect
+							className="inputField"
 							id="bloodTypeSelect"
 							label="Blood Type"
-							defaultValue={bloodType}
 							onChange={(e) => setBloodType(e.target.value)}
 						>
 							<option defaultValue={bloodType}></option>
@@ -141,10 +272,11 @@ export default function Profile(props) {
 							<option>AB+</option>
 							<option>AB-</option>
 						</NativeSelect>
+						<br />
 						<NativeSelect
+							className="inputField"
 							id="diabetic Select"
 							label="Are you diabetic"
-							defaultValue={isDiabetic}
 							onChange={(e) => setDiabetic(e.target.value)}
 						>
 							<option defaultValue=""></option>
@@ -152,6 +284,7 @@ export default function Profile(props) {
 							<option>Type-2</option>
 							<option>No</option>
 						</NativeSelect>
+						<br />
 						<Button
 							id="submitButton"
 							color="primary"

@@ -40,8 +40,8 @@ button:hover {
 .Navbar .rightSide .profilePage img {
 	width: 40px;
 	height: 40px;
-	position: relative; 
-	left: 80%; 
+	position: relative;
+	left: 80%;
 	top: 6%;
 }
 .Navbar .leftSide .links a {
@@ -366,4 +366,26 @@ button:hover {
 
 .workoutDetails .workoutForm #submitButton:hover {
 	box-shadow: 5px 10px 10px 3px #c7c6c6;
+}
+
+.profileContainer .profile .profHeader {
+	margin-left: 15px;
+}
+
+.profileContainer .profile .loadedUserDetails {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.profileContainer .profile .userProfile {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+}
+
+.profileContainer .profile .userProfile .inputField {
+	width: 500px;
 }

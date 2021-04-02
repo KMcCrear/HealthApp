@@ -85,7 +85,7 @@ app.post("/register", (req, res) => {
 			}
 		);
 		db.query(
-			"INSERT INTO userdetails(userid) FROM users(id)",
+			"INSERT INTO userdetails(userid) SELECT id FROM users WHERE NOT EXISTS(SELECT userid FROM userdetails WHERE userdetails.userid = users.id)",
 			(err, result) => {
 				if (err) {
 					console.log(err);
@@ -300,13 +300,16 @@ app.post("/updateUserDetails", (req, res) => {
 	const surName = req.body.surName;
 	const email = req.body.email;
 	const age = req.body.age;
+	const height = req.body.height;
+	const weight = req.body.weight;
 	const contact = req.body.emergeContact;
 	const gender = req.body.gender;
 	const bloodType = req.body.bloodType;
 	const isDiabetic = req.body.isDiabetic;
 
 	db.query(
-		`UPDATE userdetails SET firstname = "${firstName}", surname = '${surName}', email = '${email}', age = ${age}, contact = ${contact}, gender = '${gender}', bloodtype = '${bloodType}', isdiabetic = '${isDiabetic}' WHERE userid = ${id};`,
+		`UPDATE userdetails SET  age = ?, height = ?, weight = ?, contact = ?, gender = ?, bloodtype = ?, isdiabetic = ? WHERE userid = ${id};`,
+		[age, height, weight, contact, gender, bloodType, isDiabetic],
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -318,7 +321,8 @@ app.post("/updateUserDetails", (req, res) => {
 	);
 
 	db.query(
-		`UPDATE users SET firstname = "${firstName}", surname = "${surName}", email = "${email}" WHERE id = ${id};`,
+		`UPDATE users SET firstname = ?, surname = ?, email = ? WHERE id = ${id};`,
+		[firstName, surName, email],
 		(err, result) => {
 			if (err) {
 				console.log(err);

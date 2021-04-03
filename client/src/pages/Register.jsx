@@ -2,11 +2,14 @@ import { React, useState } from "react";
 import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import {Button } from 'antd';
+import { useHistory } from "react-router-dom";
 import {CaretLeftOutlined } from '@ant-design/icons';
 import updateOnLogin from '../helpers/updateOnLogin';
 import endpoint from '../helpers/endPoint';
 
 const  Register = (props) => {
+	const history = useHistory();
+
 	const [showLinks, setShowLinks] = useState(false);
 	const {state, onUpdate, setRegisterClicked} = props;
 	const [firstNameReg, setFirstNameReg] = useState(null);
@@ -33,8 +36,13 @@ const  Register = (props) => {
 					setRegisterStatus(response.data.message);
 				} else {
 					console.log('data is ', data);
-					setRegisterStatus("Welcome Registration Successful");
-					//updateOnLogin(onUpdate, data);
+					Axios.post(`${endpoint()}/login`, {
+						email: emailReg,
+						password: passwordTwoReg,
+					}).then((response)=>{
+						updateOnLogin(onUpdate, response.data[0])
+						history.push('/home');
+					})					
 				}
 			});
 		}

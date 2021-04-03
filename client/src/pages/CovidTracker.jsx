@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/NavBar";
-import getCovidData from '../helpers/getCovidData';
-import test from '../helpers/test';
+import {getCovidData} from '../helpers/getCovidData';
+
 export default function CovidTracker() {
 	const [location, setLocation] = useState("");
 	const [covidData, setCovidData] = useState('');
 	const [covidTable, setCovidTable] = useState();
 	const getData= async()=>{
 		const data = await getCovidData(location)
-		console.log('data is again ', data)
 		setCovidData(data)
 	}
-	console.log('covid data ', covidData);
 	useEffect(()=>{
 		if(!covidData){
 			return;

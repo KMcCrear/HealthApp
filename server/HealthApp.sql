@@ -32,6 +32,7 @@ DROP TABLE  IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS`users` (
   `id` int(11) PRIMARY KEY NOT NULL,
   `firstname` varchar(512) NOT NULL,
+  `userLocation` varchar(512),
   `surname` varchar(512) NOT NULL,
   `email` varchar(512) NOT NULL,
   `password` varchar(512) NOT NULL,

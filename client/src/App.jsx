@@ -21,6 +21,7 @@ const App = () => {
 		loggedIn: false,
 		id: null,
 		email: null,
+		userLocation: null,
 		firstname: null,
 		surname: null,
 		message: null,
@@ -44,7 +45,6 @@ const App = () => {
 
 	const onUpdate = (object) => {
 		const newState = _.cloneDeep(state);
-		console.log("updating the state ", object);
 		_.merge(newState, object);
 		setNewState(newState);
 	};

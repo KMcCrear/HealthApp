@@ -1,6 +1,6 @@
 //using this to populate the state with the user details
 const updateOnLogin = (onUpdate, data) => {
-	console.log("populating the state on logon");
+	console.log("populating the state on logon", data);
 	onUpdate({
 		email: data?.email,
 		id: data?.id,
@@ -8,6 +8,7 @@ const updateOnLogin = (onUpdate, data) => {
 		surname: data?.surname,
 		role: data?.role,
 		message: `Welcome ${data?.firstname} ${data?.surname}!`,
+		userLocation: data?.userLocation,
 		loggedIn: true,
 	});
 };

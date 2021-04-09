@@ -84,6 +84,14 @@ app.post("/register", (req, res) => {
 				}
 			}
 		);
+		db.query(
+			"INSERT INTO userdetails(userid) SELECT id FROM users WHERE NOT EXISTS(SELECT userid FROM userdetails WHERE userdetails.userid = users.id)",
+			(err, result) => {
+				if (err) {
+					console.log(err);
+				}
+			}
+		);
 	});
 });
 
@@ -97,9 +105,11 @@ app.get("/login", (req, res) => {
 		res.send({ loggedIn: false });
 	}
 });
-app.put('/logout', (req,res)=>{
+
+app.put("/logout", (req, res) => {
 	req.session.destroy();
-})
+});
+
 app.get("/home/reminders-get", (req, res) => {
 	const userId = req.query.userId;
 	console.log("USER QUERY IS ", req.query);
@@ -113,6 +123,23 @@ app.get("/home/reminders-get", (req, res) => {
 			}
 		}
 	);
+});
+
+app.post('/editTable', (req,res)=>{
+	const table = req.body.table;
+	const field = req.body.field;
+	const value = req.body.value;
+	const userId = req.body.userId;
+
+	const idField = (table==='users') ? 'id' : 'userid';
+
+	db.query(`UPDATE ${table} SET ${field}='${value}' WHERE ${idField}=${userId}`, (err,result)=>{
+		if(err){
+			console.log(err);
+		} else {
+			res.send(result);
+		}
+	})
 });
 
 app.post("/home/reminders-add", (req, res) => {
@@ -134,6 +161,7 @@ app.post("/home/reminders-add", (req, res) => {
 		}
 	);
 });
+
 app.post("/home/reminders-delete", (req, res) => {
 	const id = req.body.id;
 	db.query(`DELETE FROM reminders where id = ${id}`, (err, result) => {
@@ -267,6 +295,57 @@ app.post("/deleteworkout", (req, res) => {
 			} else {
 				console.log(result);
 				res.send(result);
+			}
+		}
+	);
+});
+
+app.post("/getUserDetails", (req, res) => {
+	const id = req.body.id;
+
+	db.query(`SELECT * FROM userdetails WHERE userid = ${id}`, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.send({ mesage: err });
+		} else {
+			console.log(result);
+			res.send(result);
+		}
+	});
+});
+
+app.post("/updateUserDetails", (req, res) => {
+	const id = req.body.id;
+	const firstName = req.body.firstName;
+	const surName = req.body.surName;
+	const email = req.body.email;
+	const age = req.body.age;
+	const height = req.body.height;
+	const weight = req.body.weight;
+	const contact = req.body.emergeContact;
+	const gender = req.body.gender;
+	const bloodType = req.body.bloodType;
+	const isDiabetic = req.body.isDiabetic;
+
+	db.query(
+		`UPDATE userdetails SET  age = ?, height = ?, weight = ?, contact = ?, gender = ?, bloodtype = ?, isdiabetic = ? WHERE userid = ${id};`,
+		[age, height, weight, contact, gender, bloodType, isDiabetic],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				res.send({ error: err });
+			} else {
+				res.send(result);
+			}
+		}
+	);
+
+	db.query(
+		`UPDATE users SET firstname = ?, surname = ?, email = ? WHERE id = ${id};`,
+		[firstName, surName, email],
+		(err, result) => {
+			if (err) {
+				console.log(err);
 			}
 		}
 	);

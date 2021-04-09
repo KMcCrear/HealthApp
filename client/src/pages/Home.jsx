@@ -1,16 +1,29 @@
-import "antd/dist/antd.css";
+//import "antd/dist/antd.css";
 import Axios from "axios";
 import endpoint from '../helpers/endPoint';
 import React, {useEffect, useState} from "react";
 import _ from 'lodash';
-import {Row, Col, Table, Space, Button, Modal, Input, Form, TimePicker, DatePicker} from 'antd';
+import {Row, Col, Table, Space, Spin, Button, Modal, Input, Form, TimePicker, DatePicker} from 'antd';
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import getLocation from '../helpers/getLocation';
+import {getCovidData, getCovidAreas} from '../helpers/getCovidData';
+import changeTableField from '../databaseAccess/changeTableField';
+import CovidTable from '../components/CovidTable';
 
 const Home=(props)=> {
 
 	const {onUpdate, state} = props;
 	const [tableData, setTableData] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
+
+	const [location, setLocation ]= useState(null);
+	const [locationError, setLocationError] = useState(null)
+	const [manualLocation, setManualLocation] = useState(null);
+	const [locationLoading, setLocationLoading] = useState(false);
+
+	const [covidData, setCovidData] = useState(null);
+	const [availableAreas, setAvailableAreas] = useState(null)
+	const [allAreas, setAllAreas] = useState(null);
 	const emptyRow = {
 		info: '',
 		time: '',
@@ -22,7 +35,12 @@ const Home=(props)=> {
 	}
 
 	const [newRow, setNewRow] = useState(emptyRow);
-
+	useEffect(()=>{
+		const getAreas = async()=>{
+			await getCovidAreas(setAllAreas)
+		}
+		getAreas()
+	},[])
 	useEffect (()=>{
 		if(!state.id){return;}
 		console.log('getting the reminders for the user', state.id);
@@ -32,7 +50,37 @@ const Home=(props)=> {
 			}
 		}).then((response)=>{setTableData(response.data)})
 	},[state.id])
-	
+
+	useEffect(()=>{
+		if(!state.userLocation){return}
+		fetchCovidData(state.userLocation)
+	},[state.userLocation])
+
+	useEffect(()=>{
+		setLocationLoading(false)
+		if(!location){return}
+		// checking if location is in api
+
+		const newAvailableAreas = [];
+		console.log('all areas ', allAreas)
+		allAreas.forEach((area)=>{
+			if(area.toLowerCase().includes(location.toLowerCase())){
+				newAvailableAreas.push(area)
+			}
+		})
+		setAvailableAreas(newAvailableAreas)
+		if (!newAvailableAreas.length){
+			setCovidData(404)
+		} else{
+			if(location!==newAvailableAreas[0]){
+				setLocation(newAvailableAreas[0])
+			} else {
+				fetchCovidData(location)
+			}
+		}
+
+	},[location])
+
 	const updateNewRow = (field) =>{
 		const row = _.cloneDeep(newRow)
 		_.merge(row, field)
@@ -74,7 +122,6 @@ const Home=(props)=> {
 		const newTableData = _.cloneDeep(tableData);
 		const index = newTableData.indexOf(row);
 		newTableData.splice(index, 1);
-		console.log('new table data', newTableData)
 
 		Axios.post(`${endpoint()}/home/reminders-delete`,{
 			id: row.id,
@@ -92,16 +139,108 @@ const Home=(props)=> {
 	}
 
 	const modalOnOk = () =>{
-		console.log('modal on ok', newRow)
-		Axios.post(`${endpoint()}/home/reminders-add`, newRow
-		).then((response)=>console.log(response))
 		const newTableData = _.cloneDeep(tableData);
 		newTableData.push(newRow)
+		Axios.post(`${endpoint()}/home/reminders-add`, newRow
+		).then((response)=>console.log(response))
 		setTableData(newTableData);
 		setNewRow(emptyRow);
 		setModalVisible(false)
+	
+	}
+	const fetchCovidData = async(searchLocation)=>{
+		await getCovidData(searchLocation, setCovidData)
 	}
 
+	console.log('COVID DATA ', covidData)
+	const setUserLocation = () =>{
+		const body = {
+			table: 'users',
+			field: 'userLocation',
+			value:	location,
+			userId: state.id,
+		}
+		changeTableField(body)
+		resetLocation()
+		onUpdate({userLocation: location});
+	};
+
+	const manualSearch = ()=>{	
+		return(
+			<>
+				<Input 
+					placeholder = {'Type city name e.g. Liverpool '}
+					onChange={(e)=>setManualLocation(e.target.value)}
+				/>
+				<Button onClick={()=>{
+					setLocationError(false)
+					setLocation(manualLocation)
+				}}disabled={!manualLocation}>Confirm</Button>
+			</>
+		)
+	}
+
+	const resetLocation = ()=> {
+		setLocation(null); 
+		setCovidData(null);
+		setManualLocation(null);
+	}
+
+	const renderNoLocation = () =>{
+		return (
+			<>
+			{(!location && !covidData && !locationError) && (				
+				<>
+					<h3>No location data available</h3> 
+					{!locationLoading && (					
+					<Button 
+						onClick={()=>{getLocation(setLocation, setLocationError); setLocationLoading(true)}}> 
+						Find my location 
+					</Button>
+					)}
+					{locationLoading && (<Spin tip='Loading...'/>)}
+					<br/>
+					<h3>Or search it manually:</h3>	
+					{manualSearch()}
+				</>
+			)}
+
+			{(location || covidData ) && (
+				<>
+					<p>We either determined your location or you chose <span style={{color: 'red'}}>{location}</span>.</p>
+					{covidData!==404 && covidData && (
+						<>
+							<br/><br/>
+							<h3>There is data available for the selected area</h3> 
+							<Space>
+								<Button onClick={()=>setUserLocation()}>Set as default area</Button>
+								<Button danger onClick={()=>resetLocation()}>Cancel</Button>
+							</Space>
+						</>
+					)}
+					{!covidData && (
+						<Spin tip='Loading Covid data'/>
+					)}
+					{(covidData===404 || locationError) && (
+						<b>Sorry, we couldn't find data for the selected area <br/>
+							Try searching manually
+							{manualSearch()}
+						</b>
+					)}
+				</>
+			)}
+
+			{locationError &&(
+				<p>	We encountered an error while getting your location: <br/>
+					<span style={{color:'red'}}>{locationError}</span> <br/><br/><br/><br/>
+					You can set your city manually:
+					{manualSearch()}
+				</p>
+					
+			)}
+			</>
+		)
+	}
 	return(
 		<>
 		<Row>
@@ -111,12 +250,10 @@ const Home=(props)=> {
 					dataSource={tableData} 
 					columns={tableColumns} 
 					scroll={{y:400}}
+					bordered={true}
 					pagination={false}
 					size={'small'}
 				/>			
-			</Col>
-		</Row>
-		<Col span={9}>
 			<Button
 				type="dashed"
 				onClick={() => {
@@ -124,8 +261,25 @@ const Home=(props)=> {
 				}}
 				style={{ width: '100%'}}
 				icon={<PlusOutlined />}
-			> Add a row </Button>
-		</Col>
+			> Add a row 
+			</Button>
+			</Col>
+			<Col span={0.7}>
+				<>
+				</>
+			</Col>
+			<Col span={9}>
+				<h1> Covid-19 information near you </h1>
+				<div class='rectangle'>
+					{!state.userLocation && renderNoLocation()}
+					{state.userLocation && 
+						<CovidTable 
+							data={covidData}
+							state={state}
+						/>}
+				</div>
+			</Col>
+		</Row>
 
 		<Modal visible={modalVisible} onCancel={()=>{modalOnCancel()}} onOk={()=>{modalOnOk()}}>
 				<Form>

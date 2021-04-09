@@ -14,15 +14,18 @@ import endpoint from "./helpers/endPoint";
 import Activities from "./pages/Activities";
 import Workouts from "./pages/Workouts";
 import AdminEdit from "./pages/AdminEdit";
+import Profile from "./pages/Profile";
 
 const App = () => {
 	const [state, setNewState] = useState({
 		loggedIn: false,
 		id: null,
 		email: null,
+		userLocation: null,
 		firstname: null,
 		surname: null,
 		message: null,
+		role: null,
 		reminders: [],
 	});
 	Axios.defaults.withCredentials = true;
@@ -42,7 +45,6 @@ const App = () => {
 
 	const onUpdate = (object) => {
 		const newState = _.cloneDeep(state);
-		console.log("updating the state ", object);
 		_.merge(newState, object);
 		setNewState(newState);
 	};
@@ -82,8 +84,13 @@ const App = () => {
 				/>
 
 				<Route
-					path="adminedit"
+					path="/adminedit"
 					render={() => <AdminEdit state={state} onUpdate={onUpdate} />}
+				/>
+
+				<Route
+					path="/profile"
+					render={() => <Profile state={state} onUpdate={onUpdate} />}
 				/>
 			</div>
 		);

@@ -396,3 +396,19 @@ button:hover {
 .profileContainer .profile .userProfile .inputField {
 	width: 500px;
 }
+
+.reminders{
+	padding-top:20px;
+	text-align: center;
+	position: absolute;
+	left:30%;
+	width:100%;
+}
+.covid-table{
+
+	text-align: center;
+	position:absolute;
+	margin-top: 325px;
+	width: 100%;
+	left:30%
+}

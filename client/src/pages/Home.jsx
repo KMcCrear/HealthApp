@@ -243,13 +243,14 @@ const Home=(props)=> {
 	}
 	return(
 		<>
+		<div class="reminders">
 		<Row>
 			<Col span={9}>
 				<h1>Your reminders</h1>
 				<Table 
 					dataSource={tableData} 
 					columns={tableColumns} 
-					scroll={{y:400}}
+					scroll={{y:150}}
 					bordered={true}
 					pagination={false}
 					size={'small'}
@@ -264,6 +265,10 @@ const Home=(props)=> {
 			> Add a row 
 			</Button>
 			</Col>
+			</Row>
+			</div>
+			<div class="covid-table">
+			<Row>
 			<Col span={0.7}>
 				<>
 				</>
@@ -280,6 +285,7 @@ const Home=(props)=> {
 				</div>
 			</Col>
 		</Row>
+		</div>
 
 		<Modal visible={modalVisible} onCancel={()=>{modalOnCancel()}} onOk={()=>{modalOnOk()}}>
 				<Form>

@@ -6,6 +6,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	background-color:Bottom #f2b5eb;
 }
 
 button:hover {
@@ -17,7 +18,8 @@ button:hover {
 	text-align: center;
 	width: 100%;
 	height: 70%;
-	background: #CEEAF7;
+	background: #c585d8;
+	border-radius: 15px;
   }
 .Navbar {
 	background-color: #5b3467;

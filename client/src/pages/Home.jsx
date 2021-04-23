@@ -286,7 +286,6 @@ const Home=(props)=> {
 			</Col>
 		</Row>
 		</div>
-
 		<Modal visible={modalVisible} onCancel={()=>{modalOnCancel()}} onOk={()=>{modalOnOk()}}>
 				<Form>
 					<Form.Item label='Information' rules={[{required: true}]}>

@@ -17,8 +17,8 @@ button:hover {
 	text-align: center;
 	width: 100%;
 	height: 70%;
-	background: #CEEAF7;
-  }
+	background: #ceeaf7;
+}
 .Navbar {
 	background-color: #5b3467;
 	width: 100%;
@@ -261,11 +261,11 @@ button:hover {
 }
 
 .ActivContainer {
-	background-color: #8b5fbf;
+	background-color: #aa85d5;
 }
 
 .activities {
-	background-color: #8b5fbf;
+	background-color: #aa85d5;
 	height: 320px;
 }
 .activities header {
@@ -274,6 +274,7 @@ button:hover {
 
 .activities h1 {
 	margin-left: 15px;
+	color: #fff;
 }
 
 .activities .activityDivs {
@@ -283,7 +284,9 @@ button:hover {
 }
 
 .activities .activityDivs .activityLinks {
+	color: #fff;
 	border: none;
+	position: sticky;
 	border-width: 1px;
 	margin-left: 15px;
 	padding: 5px;
@@ -311,9 +314,13 @@ button:hover {
 }
 
 .loadWorkoutData {
-	background-color: #d183c9;
+	background-color: #f2b5eb;
 	height: 930px;
 	max-height: 1160px;
+}
+
+.loadWorkoutData h2 {
+	color: #fff;
 }
 
 .loadWorkoutData .workoutDivs {
@@ -333,10 +340,19 @@ button:hover {
 	background-color: #fff;
 }
 
+.workoutContainer {
+	height: 100vh;
+	overflow: hidden;
+	background-color: #b675c9;
+}
+
 .workoutHeader {
-	margin-top: 10px;
 	margin-left: 15px;
 	font-size: 25px;
+}
+
+.workoutHeader h1 {
+	color: #fff;
 }
 
 .workoutDetails {
@@ -347,8 +363,10 @@ button:hover {
 }
 
 .workoutDetails .workoutName {
-	font-size: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 40px;
 	margin-bottom: 10px;
+	color: #fff;
 }
 
 .workoutDetails .inputWorkout br {
@@ -356,9 +374,14 @@ button:hover {
 }
 
 .workoutDetails .workoutForm {
+	margin-top: 10px;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 50px;
+	background-color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	padding-bottom: 15px;
 }
 
 .workoutDetails .workoutForm #outlined-basic {
@@ -385,6 +408,14 @@ button:hover {
 	align-items: center;
 }
 
+.profileContainer .profile .loadedUserDetails .currentUserData br {
+	margin-bottom: 15px;
+}
+
+.profileContainer .profile .loadedUserDetails .currentUserData .inputField {
+	width: 500px;
+}
+
 .profileContainer .profile .userProfile {
 	margin-top: 15px;
 	display: flex;
@@ -395,4 +426,11 @@ button:hover {
 
 .profileContainer .profile .userProfile .inputField {
 	width: 500px;
+}
+
+.profileContainer.profile .userProfile #submitButton {
+	width: 500px;
+	color: rgb(0, 0, 0);
+	background-color: rgb(112, 223, 235);
+	border-radius: 10px;
 }

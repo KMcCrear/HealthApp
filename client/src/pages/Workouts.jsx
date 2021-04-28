@@ -41,7 +41,7 @@ const Activity = (props) => {
 	};
 
 	return (
-		<div className="Container">
+		<div className="workoutContainer">
 			<div className="workoutHeader">
 				<h1>Workouts</h1>
 			</div>

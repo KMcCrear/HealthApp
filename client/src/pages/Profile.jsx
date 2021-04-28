@@ -77,6 +77,7 @@ export default function Profile(props) {
 						defaultValue={state.firstname}
 					/>
 					<br />
+					<br />
 					<TextField
 						className="inputField"
 						id="outlined-basic"
@@ -86,6 +87,7 @@ export default function Profile(props) {
 						disabled={true}
 						defaultValue={state.surname}
 					/>
+					<br />
 					<br />
 					<TextField
 						className="inputField"
@@ -97,6 +99,7 @@ export default function Profile(props) {
 						defaultValue={state.email}
 					/>
 					<br />
+					<br />
 					<TextField
 						className="inputField"
 						id="outlined-basic"
@@ -106,6 +109,7 @@ export default function Profile(props) {
 						disabled={true}
 						defaultValue={user.age}
 					/>
+					<br />
 					<br />
 					<TextField
 						className="inputField"
@@ -117,6 +121,7 @@ export default function Profile(props) {
 						defaultValue={user.contact}
 					/>
 					<br />
+					<br />
 					<TextField
 						className="inputField"
 						id="outlined-basic"
@@ -127,6 +132,7 @@ export default function Profile(props) {
 						defaultValue={user.gender}
 					/>
 					<br />
+					<br />
 					<TextField
 						className="inputField"
 						id="outlined-basic"
@@ -136,6 +142,7 @@ export default function Profile(props) {
 						disabled={true}
 						defaultValue={user.bloodtype}
 					/>
+					<br />
 					<br />
 					<TextField
 						className="inputField"
@@ -177,6 +184,7 @@ export default function Profile(props) {
 							onChange={(e) => onUpdate({ firstname: e.target.value })}
 						/>
 						<br />
+						<br />
 						<TextField
 							className="inputField"
 							id="outlined-basic"
@@ -186,7 +194,7 @@ export default function Profile(props) {
 							onChange={(e) => onUpdate({ surname: e.target.value })}
 						/>
 						<br />
-
+						<br />
 						<TextField
 							className="inputField"
 							id="outlined-basic"
@@ -197,6 +205,7 @@ export default function Profile(props) {
 							onChange={(e) => onUpdate({ email: e.target.value })}
 						/>
 						<br />
+						<br />
 						<TextField
 							className="inputField"
 							id="outlined-basic"
@@ -205,6 +214,7 @@ export default function Profile(props) {
 							label="age"
 							onChange={(e) => setAge(e.target.value)}
 						/>
+						<br />
 						<br />
 						<TextField
 							className="inputField"
@@ -215,6 +225,7 @@ export default function Profile(props) {
 							onChange={(e) => setHeight(e.target.value)}
 						/>
 						<br />
+						<br />
 						<TextField
 							className="inputField"
 							id="outlined-basic"
@@ -223,6 +234,7 @@ export default function Profile(props) {
 							label="Weight (kg)"
 							onChange={(e) => setWeight(e.target.value)}
 						/>
+						<br />
 						<br />
 						<TextField
 							className="inputField"
@@ -234,16 +246,18 @@ export default function Profile(props) {
 							onChange={(e) => setContact(e.target.value)}
 						/>
 						<br />
+						<br />
 						<NativeSelect
 							className="inputField"
 							id="genderSelect"
 							onChange={(e) => setGender(e.target.value)}
 						>
-							<option defaultValue=""></option>
+							<option defaultValue="">Select Gender</option>
 							<option>Male</option>
 							<option>Female</option>
 							<option>Other</option>
 						</NativeSelect>
+						<br />
 						<br />
 						<NativeSelect
 							className="inputField"
@@ -251,10 +265,11 @@ export default function Profile(props) {
 							label="Do You have a Disability?"
 							onChange={(e) => setDisability(e.target.value)}
 						>
-							<option defaultValue=""></option>
+							<option defaultValue="">Do you have a Disability</option>
 							<option>Yes</option>
 							<option>No</option>
 						</NativeSelect>
+						<br />
 						<br />
 						<NativeSelect
 							className="inputField"
@@ -262,7 +277,7 @@ export default function Profile(props) {
 							label="Blood Type"
 							onChange={(e) => setBloodType(e.target.value)}
 						>
-							<option defaultValue={bloodType}></option>
+							<option defaultValue={bloodType}>Select Blood Type</option>
 							<option>A+</option>
 							<option>A-</option>
 							<option>B+</option>
@@ -273,17 +288,19 @@ export default function Profile(props) {
 							<option>AB-</option>
 						</NativeSelect>
 						<br />
+						<br />
 						<NativeSelect
 							className="inputField"
 							id="diabetic Select"
 							label="Are you diabetic"
 							onChange={(e) => setDiabetic(e.target.value)}
 						>
-							<option defaultValue=""></option>
+							<option defaultValue="">Are you Diabetic?</option>
 							<option>Type-1</option>
 							<option>Type-2</option>
 							<option>No</option>
 						</NativeSelect>
+						<br />
 						<br />
 						<Button
 							id="submitButton"

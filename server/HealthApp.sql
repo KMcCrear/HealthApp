@@ -97,7 +97,7 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 --
 DROP TABLE  IF EXISTS `userdetails`;
 CREATE TABLE `userdetails` (
-  `userid` int(11) NOT NULL,
+  `userid` int(11) PRIMARY KEY NOT NULL,
   `age` int(11) DEFAULT NULL,
   `weight` int(4) DEFAULT NULL,
   `height` int(4) DEFAULT NULL,

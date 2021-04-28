@@ -97,6 +97,19 @@ app.post("/register", (req, res) => {
 
 /*This is a GET method, checks to see if the use is logged in
 sends info on if the user is logged in to the front end.*/
+app.post("/resetField",(req,res)=>{
+	const table = req.body.table;
+	const field = req.body.field;
+	const id = req.body.id;
+	const idField = (table==='users') ? 'id' : 'userid';
+	db.query(`UPDATE ${table} SET ${field} = NULL where ${idField} = ${id};`,(err,result)=>{
+		if(err){
+			console.log('error ', err);
+		} else {
+			res.send(result);
+		}
+	})
+})
 
 app.get("/login", (req, res) => {
 	if (req.session.user) {

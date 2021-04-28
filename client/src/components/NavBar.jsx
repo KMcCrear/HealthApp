@@ -33,7 +33,7 @@ function NavBar(props) {
 						<a href="/covidtracking">Covid-19</a>
 						{showAdmin}
 					</div>
-					;
+					
 					<button onClick={() => setShowLinks(!showLinks)}>
 						<ReorderIcon />
 					</button>

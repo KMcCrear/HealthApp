@@ -116,7 +116,7 @@ export default function Profile(props) {
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
-						label="Emergancy Contact"
+						label="Emergency Contact"
 						disabled={true}
 						defaultValue={user.contact}
 					/>
@@ -241,7 +241,7 @@ export default function Profile(props) {
 							id="outlined-basic"
 							variant="outlined"
 							type="tel"
-							label="Emergancy Contact"
+							label="Emergency Contact"
 							defaultValue={contact}
 							onChange={(e) => setContact(e.target.value)}
 						/>

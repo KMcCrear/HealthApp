@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `reminders`(
 
 DROP TABLE  IF EXISTS `workouts`;
 CREATE TABLE `workouts` (
-  `id` int(11) NOT NULL,
+  `id` int(11) Primary KEY NOT NULL,
   `userid` int(11) NOT NULL,
   `workoutname` varchar(512) NOT NULL,
   `totaltime` varchar(20) DEFAULT NULL,
@@ -97,7 +97,7 @@ INSERT INTO `reminders` (`id`,`userid`, `info`, `date`,`time`,`location`) VALUES
 --
 DROP TABLE  IF EXISTS `userdetails`;
 CREATE TABLE `userdetails` (
-  `userid` int(11) NOT NULL,
+  `userid` int(11) PRIMARY KEY NOT NULL,
   `age` int(11) DEFAULT NULL,
   `weight` int(4) DEFAULT NULL,
   `height` int(4) DEFAULT NULL,

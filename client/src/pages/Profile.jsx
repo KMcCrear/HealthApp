@@ -165,7 +165,7 @@ export default function Profile(props) {
 			<div className="profile">
 				<div className="profHeader">
 					<header>
-						<h1>User Profile</h1>
+						<h1 class='title'>User Profile</h1>
 					</header>
 				</div>
 				<div className="loadedUserDetails">

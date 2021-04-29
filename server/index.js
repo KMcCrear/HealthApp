@@ -70,28 +70,39 @@ app.post("/register", (req, res) => {
 		if (err) {
 			console.log(err);
 		}
+		db.query("select email from users",(err,result)=>{
+			const registeredEmails = [];
+			result.forEach((data)=>registeredEmails.push(data.email));
+			if(err){
+				res.send({message:"We encountered an error"});
+			}
+			if(registeredEmails.includes(email)){
+				res.send({message: "Account with this email already exists!"});
+			} else{
+				db.query(
+					"INSERT INTO users(firstname, surname, email, password) VALUES (? ,? ,? ,?)",
+					[firstname, surname, email, hash],
+					(err, result) => {
+						if (err) {
+							console.log(err);
+							res.send({ message: "Registration unsuccessful" });
+						} else {
+							req.session.user = result;
+							res.send(result);
+						}
+					}
+				);
+				db.query(
+					"INSERT INTO userdetails(userid) SELECT id FROM users WHERE NOT EXISTS(SELECT userid FROM userdetails WHERE userdetails.userid = users.id)",
+					(err, result) => {
+						if (err) {
+							console.log(err);
+						}
+					}
+				);
+			}
+		})
 
-		db.query(
-			"INSERT INTO users(firstname, surname, email, password) VALUES (? ,? ,? ,?)",
-			[firstname, surname, email, hash],
-			(err, result) => {
-				if (err) {
-					console.log(err);
-					res.send({ message: "Registration unsuccessful" });
-				} else {
-					req.session.user = result;
-					res.send(result);
-				}
-			}
-		);
-		db.query(
-			"INSERT INTO userdetails(userid) SELECT id FROM users WHERE NOT EXISTS(SELECT userid FROM userdetails WHERE userdetails.userid = users.id)",
-			(err, result) => {
-				if (err) {
-					console.log(err);
-				}
-			}
-		);
 	});
 });
 

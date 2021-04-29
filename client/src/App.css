@@ -6,6 +6,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	background-color:Bottom #f2b5eb;
 }
 
 button:hover {
@@ -17,8 +18,10 @@ button:hover {
 	text-align: center;
 	width: 100%;
 	height: 70%;
-	background: #ceeaf7;
-}
+	background: #c585d8;
+	border-radius: 15px;
+  }
+
 .Navbar {
 	background-color: #5b3467;
 	width: 100%;
@@ -416,6 +419,22 @@ button:hover {
 
 .profileContainer .profile  .inputField {
 	width: 40rem;
+}
+
+
+.reminders{
+	padding-top:20px;
+	text-align: center;
+	position: absolute;
+	left:30%;
+	width:100%;
+}
+.covid-table{
+	text-align: center;
+	position:absolute;
+	margin-top: 325px;
+	width: 100%;
+	left:30%
 }
 
 .profileContainer.profile .userProfile #submitButton {

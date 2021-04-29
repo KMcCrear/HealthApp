@@ -10,14 +10,11 @@ async function getCovidData(location, setCovidData) {
     const structure = {
         date: "date",
         name: "areaName",
-        cases: {
-            daily: "newCasesByPublishDate",
-            cumulative: "cumCasesByPublishDate",
-        },
-        deaths: {
-            daily: "newDeathsByDeathDate",
-            cumulative: "cumDeathsByDeathDate",
-        }
+        dailyCases: "newCasesByPublishDate",
+        cumulativeCases: "cumCasesByPublishDate",
+        dailyDeaths: "newDeathsByDeathDate",
+        cumulativeDeaths: "cumDeathsByDeathDate",
+        
     };
 
     // 'https://api.coronavirus.data.gov.uk/v1/data?' +
@@ -43,12 +40,19 @@ async function getCovidData(location, setCovidData) {
                         firstTen = dataArray.slice(0, 10);
                     })
             );
+        const covidValue = (value)=>{
+            if(value==='undefined' || value===null){
+                return 'N/A'
+            }
+            return value;
+        }
         firstTen.forEach((entry)=>{
             data.push({
-                date: entry.date || 'N/A',
-                dailyCases: entry.cases?.daily || 'N/A',
-                dailyCasesCumulative: entry.cases.cumulative  || 'N/A',
-                dailyDeaths: entry.deaths.daily || 'N/A',
+                date: covidValue(entry.date),
+                dailyCases: covidValue(entry.dailyCases),
+                casesCumulative: covidValue(entry.cumulativeCases),
+                dailyDeaths: covidValue(entry.dailyDeaths),
+                cumulativeDeaths: covidValue(entry.cumulativeDeaths) 
             })
         })
         setCovidData(data)
@@ -58,38 +62,46 @@ async function getCovidData(location, setCovidData) {
         return 404
     }
 }
+
+function getYesterdayDateFormatted() {
+    var date = new Date();
+    date.setDate(date.getDate() - 1);
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 const getCovidAreas = async(setAllAreas)=>{
-    const filters = [
-        `areaType=utla;`,
-        'date=2021-03-20'
-    ];
-    const structure = {
-        date: "date",
-        name: "areaName",
-    };
-    const apiParams =`filters=${filters}&structure=${JSON.stringify(structure)}`
-    console.log(apiParams)
-    const encodedParams = encodeURI(apiParams)
+   
+    const yesterdayDate = getYesterdayDateFormatted();
+
     let dataArray = []
-    try{
+    const endpoint = (
+        'https://api.coronavirus.data.gov.uk/v1/data?' +
+        `filters=areaType=utla;date=${yesterdayDate}&` +
+        'structure={"date":"date","newCases":"newCasesByPublishDate","name":"areaName"}'
+    );
+        console.log("endpoint is ", endpoint);
+        try{
         await fetch(
-                `https://api.coronavirus.data.gov.uk/v1/data?${encodedParams}`
+                endpoint
             ).then((response) =>
-                response
-                    .json()
-                    .then((data) => ({
-                        data: data,
-                    }))
-                    .then((res) => {
-                        dataArray = res.data.data;
+                response.json()
+                    .then((data) => {
+                        data.data.forEach((row)=>dataArray.push(row.name))
                     })
+                   
             );
-        const areas = []
-        dataArray.forEach((row)=>{
-            areas.push(row.name)
-        })
-        console.log('areas ', areas)
-        setAllAreas(areas)
+
+        setAllAreas(dataArray)
     }catch(error){
         console.log('Error: ', error)
         return 404

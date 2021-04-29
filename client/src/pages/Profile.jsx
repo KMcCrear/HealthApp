@@ -116,7 +116,7 @@ export default function Profile(props) {
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
-						label="Emergancy Contact"
+						label="Emergency Contact"
 						disabled={true}
 						defaultValue={user.contact}
 					/>
@@ -165,7 +165,7 @@ export default function Profile(props) {
 			<div className="profile">
 				<div className="profHeader">
 					<header>
-						<h1>User Profile</h1>
+						<h1 class='title'>User Profile</h1>
 					</header>
 				</div>
 				<div className="loadedUserDetails">
@@ -241,7 +241,7 @@ export default function Profile(props) {
 							id="outlined-basic"
 							variant="outlined"
 							type="tel"
-							label="Emergancy Contact"
+							label="Emergency Contact"
 							defaultValue={contact}
 							onChange={(e) => setContact(e.target.value)}
 						/>

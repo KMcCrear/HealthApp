@@ -36,11 +36,15 @@ const Home=(props)=> {
 
 	const [newRow, setNewRow] = useState(emptyRow);
 	useEffect(()=>{
+		if(state.userLocation){
+			return;
+		}
 		const getAreas = async()=>{
 			await getCovidAreas(setAllAreas)
 		}
 		getAreas()
-	},[])
+	},[state.userLocation])
+
 	useEffect (()=>{
 		if(!state.id){return;}
 		console.log('getting the reminders for the user', state.id);
@@ -50,7 +54,7 @@ const Home=(props)=> {
 			}
 		}).then((response)=>{setTableData(response.data)})
 	},[state.id])
-
+	
 	useEffect(()=>{
 		if(!state.userLocation){return}
 		fetchCovidData(state.userLocation)
@@ -62,12 +66,12 @@ const Home=(props)=> {
 		// checking if location is in api
 
 		const newAvailableAreas = [];
-		console.log('all areas ', allAreas)
 		allAreas.forEach((area)=>{
 			if(area.toLowerCase().includes(location.toLowerCase())){
 				newAvailableAreas.push(area)
 			}
 		})
+
 		setAvailableAreas(newAvailableAreas)
 		if (!newAvailableAreas.length){
 			setCovidData(404)
@@ -78,8 +82,8 @@ const Home=(props)=> {
 				fetchCovidData(location)
 			}
 		}
-
 	},[location])
+	console.log('all areas ', allAreas)
 
 	const updateNewRow = (field) =>{
 		const row = _.cloneDeep(newRow)
@@ -152,7 +156,7 @@ const Home=(props)=> {
 		await getCovidData(searchLocation, setCovidData)
 	}
 
-	console.log('COVID DATA ', covidData)
+	console.log('COVID DATA ', covidData, ' location is ', location)
 	const setUserLocation = () =>{
 		const body = {
 			table: 'users',
@@ -275,6 +279,8 @@ const Home=(props)=> {
 					{state.userLocation && 
 						<CovidTable 
 							data={covidData}
+							setData={setCovidData}
+							onUpdate={onUpdate}
 							state={state}
 						/>}
 				</div>

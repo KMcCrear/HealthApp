@@ -219,7 +219,7 @@ button:hover {
 	margin-bottom: 0px;
 	font-size: 20px;
 	font-family: Arial, Helvetica, sans-serif;
-	color: yellow;
+	color: rgb(160, 4, 4);
 }
 
 .Container .landingContainer .leftsideHeading {
@@ -310,9 +310,6 @@ button:hover {
 	margin-left: 30px;
 }
 
-.workoutHeader {
-}
-
 .loadWorkoutData {
 	background-color: #f2b5eb;
 	height: 930px;
@@ -398,12 +395,13 @@ button:hover {
 	box-shadow: 5px 10px 10px 3px #c7c6c6;
 }
 
-.profileContainer .profile .profHeader {
-	margin-left: 15px;
-}
 
 .profileContainer .profile .loadedUserDetails {
-	display: flex;
+	display: grid;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	flex-direction: column;
 	align-items: center;
 }
@@ -412,20 +410,12 @@ button:hover {
 	margin-bottom: 15px;
 }
 
-.profileContainer .profile .loadedUserDetails .currentUserData .inputField {
-	width: 500px;
+.profileContainer .profile .loadedUserDetails .currentUserData .inputField .userProfile {
+	width: 40rem;
 }
 
-.profileContainer .profile .userProfile {
-	margin-top: 15px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	text-align: center;
-}
-
-.profileContainer .profile .userProfile .inputField {
-	width: 500px;
+.profileContainer .profile  .inputField {
+	width: 40rem;
 }
 
 .profileContainer.profile .userProfile #submitButton {
@@ -433,4 +423,15 @@ button:hover {
 	color: rgb(0, 0, 0);
 	background-color: rgb(112, 223, 235);
 	border-radius: 10px;
+}
+.userProfile{
+	float:right;
+	margin-right: 10%;
+}
+.loadedUserDetails{
+	float:left;
+	margin-left: 5%;
+}
+.title{
+	margin-left: 40%;
 }

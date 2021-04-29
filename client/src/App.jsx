@@ -49,7 +49,6 @@ const App = () => {
 		setNewState(newState);
 	};
 
-	console.log("state is ", state);
 	if (!state.loggedIn) {
 		return <Login state={state} onUpdate={onUpdate} />;
 	}

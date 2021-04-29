@@ -3,7 +3,7 @@ import ReorderIcon from "@material-ui/icons/Reorder";
 import Axios from "axios";
 import {Button } from 'antd';
 import { useHistory } from "react-router-dom";
-import {CaretLeftOutlined } from '@ant-design/icons';
+import {CaretLeftOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import updateOnLogin from '../helpers/updateOnLogin';
 import endpoint from '../helpers/endPoint';
 
@@ -21,10 +21,13 @@ const  Register = (props) => {
 
 	const registerUser = () => {
 		if (!firstNameReg || !surNameReg || !emailReg || !passwordReg || !passwordTwoReg) {
-			alert("Please fill in the fields!");
+			setRegisterStatus("Please fill in the fields!");
 		} else if(passwordReg!==passwordTwoReg){
-			alert("Passwords don't match!")
-		}else {
+			setRegisterStatus("Passwords don't match!")
+		} else if(!emailReg.includes('@') || !emailReg.includes('.')){
+			setRegisterStatus("Invalid email address format!")
+		}
+		else {
 			const data ={
 				firstname: firstNameReg,
 				surname: surNameReg,

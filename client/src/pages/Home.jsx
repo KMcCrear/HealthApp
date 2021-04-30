@@ -44,15 +44,16 @@ const Home=(props)=> {
 		}
 		getAreas()
 	},[state.userLocation])
-
-	useEffect (()=>{
-		if(!state.id){return;}
-		console.log('getting the reminders for the user', state.id);
+	const getReminders = ()=>{
 		Axios.get(`${endpoint()}/home/reminders-get`,{
 			params:{
 				userId: state.id
 			}
-		}).then((response)=>{setTableData(response.data)})
+		}).then((response)=>{setTableData(response.data);})
+	}
+	useEffect (()=>{
+		if(!state.id){return;}
+		getReminders();
 	},[state.id])
 	
 	useEffect(()=>{
@@ -62,7 +63,7 @@ const Home=(props)=> {
 
 	useEffect(()=>{
 		setLocationLoading(false)
-		if(!location){return}
+		if(!location || !allAreas){return}
 		// checking if location is in api
 
 		const newAvailableAreas = [];
@@ -83,7 +84,6 @@ const Home=(props)=> {
 			}
 		}
 	},[location])
-	console.log('all areas ', allAreas)
 
 	const updateNewRow = (field) =>{
 		const row = _.cloneDeep(newRow)
@@ -122,9 +122,8 @@ const Home=(props)=> {
 	]
 
 	const deleteRow = (row)=>{
-
 		const newTableData = _.cloneDeep(tableData);
-		const index = newTableData.indexOf(row);
+		const index = tableData.indexOf(row);
 		newTableData.splice(index, 1);
 
 		Axios.post(`${endpoint()}/home/reminders-delete`,{
@@ -144,10 +143,10 @@ const Home=(props)=> {
 
 	const modalOnOk = () =>{
 		const newTableData = _.cloneDeep(tableData);
-		newTableData.push(newRow)
+		// newTableData.push(newRow)
 		Axios.post(`${endpoint()}/home/reminders-add`, newRow
-		).then((response)=>console.log(response))
-		setTableData(newTableData);
+		).then((response)=>console.log(response)).then(()=>	getReminders())
+		// setTableData(newTableData);
 		setNewRow(emptyRow);
 		setModalVisible(false)
 	
@@ -156,7 +155,6 @@ const Home=(props)=> {
 		await getCovidData(searchLocation, setCovidData)
 	}
 
-	console.log('COVID DATA ', covidData, ' location is ', location)
 	const setUserLocation = () =>{
 		const body = {
 			table: 'users',
@@ -173,6 +171,7 @@ const Home=(props)=> {
 		return(
 			<>
 				<Input 
+					id='manualSearch'
 					placeholder = {'Type city name e.g. Liverpool '}
 					onChange={(e)=>setManualLocation(e.target.value)}
 				/>
@@ -246,51 +245,53 @@ const Home=(props)=> {
 		)
 	}
 	return(
-		<>
-		<div class="reminders">
-		<Row>
-			<Col span={9}>
-				<h1>Your reminders</h1>
-				<Table 
-					dataSource={tableData} 
-					columns={tableColumns} 
-					scroll={{y:150}}
-					bordered={true}
-					pagination={false}
-					size={'small'}
-				/>			
-			<Button
-				type="dashed"
-				onClick={() => {
-				addRowForm();
-				}}
-				style={{ width: '100%'}}
-				icon={<PlusOutlined />}
-			> Add a row 
-			</Button>
-			</Col>
+		<div class='page'>
+		<div id='home'>
+			<div class="reminders">
+			<Row>
+				<Col span={9}>
+					<h1>Your reminders</h1>
+					<Table 
+						dataSource={tableData} 
+						columns={tableColumns} 
+						scroll={{y:300}}
+						bordered={true}
+						pagination={false}
+						size={'small'}
+					/>			
+				<Button
+					type="dashed"
+					onClick={() => {
+					addRowForm();
+					}}
+					style={{ width: '100%'}}
+					icon={<PlusOutlined />}
+				> Add a row 
+				</Button>
+				</Col>
+				</Row>
+				</div>
+				<div class="covid-table">
+				<Row>
+				<Col span={0.7}>
+					<>
+					</>
+				</Col>
+				<Col span={9}>
+					<h1> Covid-19 information near you </h1>
+					<div class='rectangle'>
+						{!state.userLocation && renderNoLocation()}
+						{state.userLocation && 
+							<CovidTable 
+								data={covidData}
+								setData={setCovidData}
+								onUpdate={onUpdate}
+								state={state}
+							/>}
+					</div>
+				</Col>
 			</Row>
 			</div>
-			<div class="covid-table">
-			<Row>
-			<Col span={0.7}>
-				<>
-				</>
-			</Col>
-			<Col span={9}>
-				<h1> Covid-19 information near you </h1>
-				<div class='rectangle'>
-					{!state.userLocation && renderNoLocation()}
-					{state.userLocation && 
-						<CovidTable 
-							data={covidData}
-							setData={setCovidData}
-							onUpdate={onUpdate}
-							state={state}
-						/>}
-				</div>
-			</Col>
-		</Row>
 		</div>
 		<Modal visible={modalVisible} onCancel={()=>{modalOnCancel()}} onOk={()=>{modalOnOk()}}>
 				<Form>
@@ -312,7 +313,7 @@ const Home=(props)=> {
 					</Form.Item>
 				</Form>
 		</Modal>
-		</>
+		</div>
 	);
 
 }

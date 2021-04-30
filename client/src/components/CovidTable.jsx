@@ -1,7 +1,11 @@
 import React from 'react';
-import {Table} from 'antd';
+import {Table, Button} from 'antd';
+import endpoint from '../helpers/endPoint';
+import Axios from 'axios';
+
 const CovidTable = (props)=>{
-    const {data, state} = props;
+    const {data, setData, state, onUpdate} = props;
+
     const tableColumns = [
         {
             title: 'Date',
@@ -14,21 +18,37 @@ const CovidTable = (props)=>{
             dataIndex: 'dailyCases',
         },
         {
-            title: 'Daily cases cumulative',
-            key: 'dailyCasesCumulative',
-            dataIndex: 'dailyCasesCumulative'
+            title: 'Cases cumulative',
+            key: 'casesCumulative',
+            dataIndex: 'casesCumulative'
         },
         {
             title: 'Daily deaths',
             key:'dailyDeaths',
             dataIndex: 'dailyDeaths',
+        },
+        {
+            title: 'Deaths cumulative',
+            key: 'cumulativeDeaths',
+            dataIndex: 'cumulativeDeaths'
         }
     ]
+    const resetLocation = ()=>{
+        const body = {
+			table: 'users',
+			field: 'userLocation',
+            id: state.id,
+        }
+        Axios.post(`${endpoint()}/resetField`, body);
+        onUpdate({userLocation: null});
+        setData(null);
+    }
+    console.log('user location is ', state.userLocation);
     const renderFooter = ()=>(
         <>
             <p>Showing data for <b>{state.userLocation}</b>. Provided by <a href='https://coronavirus.data.gov.uk/'>https://coronavirus.data.gov.uk/</a> 
                 <br/>
-                You can change the city and the data you want to display in the <a href='/covidtracking'>Covid-19 </a>page
+                <Button onClick={()=>resetLocation()}>Reset</Button>
             </p>
         </>
     )

@@ -6,6 +6,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	background-color:Bottom #f2b5eb;
 }
 
 button:hover {
@@ -17,8 +18,13 @@ button:hover {
 	text-align: center;
 	width: 100%;
 	height: 70%;
-	background: #CEEAF7;
+	background-color: #b699d8;
+	border-radius: 15px;
   }
+ #manualSearch{
+	 width: 80%;
+	margin-right: 1%;
+}
 .Navbar {
 	background-color: #5b3467;
 	width: 100%;
@@ -83,6 +89,9 @@ button:hover {
 	left: 70.5%;
 	top: 30%;
 }
+#logoutButton{
+	position: absolute;
+}
 @media only screen and (max-width: 850px) {
 	.Navbar .leftSide .links a {
 		font-size: 20px;
@@ -130,6 +139,8 @@ button:hover {
 .content .header {
 	width: 100%;
 	font-family: Arial, Helvetica, sans-serif;
+	background-color: #FEC0CE;
+	font-size: 25px;
 	box-shadow: 0 50px 70px -20px rgba(238, 238, 238, 0.8);
 }
 
@@ -151,11 +162,7 @@ button:hover {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background: radial-gradient(
-		rgb(38, 44, 106) 0%,
-		rgba(24, 33, 101, 0.9) 59%,
-		rgba(17, 31, 103, 0.9) 100%
-	);
+	background-color: #643a64;
 	box-shadow: 0 50px 70px -20px rgba(0, 0, 0, 0.8);
 }
 
@@ -217,9 +224,9 @@ button:hover {
 	justify-content: center;
 	margin-top: 20px;
 	margin-bottom: 0px;
-	font-size: 20px;
+	font-size: 30px;
 	font-family: Arial, Helvetica, sans-serif;
-	color: yellow;
+	color: rgb(207, 1, 1);
 }
 
 .Container .landingContainer .leftsideHeading {
@@ -261,11 +268,11 @@ button:hover {
 }
 
 .ActivContainer {
-	background-color: #8b5fbf;
+	background-color: #aa85d5;
 }
 
 .activities {
-	background-color: #8b5fbf;
+	background-color: #aa85d5;
 	height: 320px;
 }
 .activities header {
@@ -274,6 +281,7 @@ button:hover {
 
 .activities h1 {
 	margin-left: 15px;
+	color: #fff;
 }
 
 .activities .activityDivs {
@@ -283,7 +291,9 @@ button:hover {
 }
 
 .activities .activityDivs .activityLinks {
+	color: #fff;
 	border: none;
+	position: sticky;
 	border-width: 1px;
 	margin-left: 15px;
 	padding: 5px;
@@ -307,13 +317,14 @@ button:hover {
 	margin-left: 30px;
 }
 
-.workoutHeader {
-}
-
 .loadWorkoutData {
-	background-color: #d183c9;
+	background-color: #f2b5eb;
 	height: 930px;
 	max-height: 1160px;
+}
+
+.loadWorkoutData h2 {
+	color: #fff;
 }
 
 .loadWorkoutData .workoutDivs {
@@ -333,10 +344,19 @@ button:hover {
 	background-color: #fff;
 }
 
+.workoutContainer {
+	height: 100vh;
+	overflow: hidden;
+	background-color: #b675c9;
+}
+
 .workoutHeader {
-	margin-top: 10px;
 	margin-left: 15px;
 	font-size: 25px;
+}
+
+.workoutHeader h1 {
+	color: #fff;
 }
 
 .workoutDetails {
@@ -347,8 +367,10 @@ button:hover {
 }
 
 .workoutDetails .workoutName {
-	font-size: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 40px;
 	margin-bottom: 10px;
+	color: #fff;
 }
 
 .workoutDetails .inputWorkout br {
@@ -356,13 +378,19 @@ button:hover {
 }
 
 .workoutDetails .workoutForm {
+	margin-top: 10px;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 50px;
+	background-color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	padding-bottom: 15px;
 }
 
 .workoutDetails .workoutForm #outlined-basic {
-	width: 300px;
+	width: 400px;
+	
 }
 
 .workoutDetails .workoutForm #submitButton {
@@ -375,24 +403,82 @@ button:hover {
 	box-shadow: 5px 10px 10px 3px #c7c6c6;
 }
 
-.profileContainer .profile .profHeader {
-	margin-left: 15px;
-}
 
 .profileContainer .profile .loadedUserDetails {
-	display: flex;
+	display: grid;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	flex-direction: column;
 	align-items: center;
 }
 
-.profileContainer .profile .userProfile {
-	margin-top: 15px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	text-align: center;
+.profileContainer .profile .loadedUserDetails .currentUserData br {
+	margin-bottom: 15px;
 }
 
-.profileContainer .profile .userProfile .inputField {
+.inputField{
+	background-color: white;
+	border-radius: 5px;
+	border:solid rgb(0, 0, 0) 1px;
+	padding: 1%;
+}
+.profileContainer .profile .loadedUserDetails .currentUserData .inputField .userProfile {
+	width: 40rem;
+}
+
+.profileContainer .profile  .inputField {
+	width: 40rem;
+}
+
+.reminders, .covid-table{
+	margin-left: 13%;
+	width:200%;
+	text-align: center;
+	position:relative;
+}
+
+#home{
+	position: fixed;
+	background-clip: border-box;
+	height: 100%;
+	width: 50%;
+	margin-left: 25%;
+	background-color: #fccbd6;
+}
+
+.page{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background-color: #b699d8;
+}
+.profileContainer.profile .userProfile #submitButton {
 	width: 500px;
+	color: rgb(0, 0, 0);
+	background-color: rgb(112, 223, 235);
+	border-radius: 10px;
+}
+.userProfile{
+	float:right;
+	margin-right: 10%;
+}
+.loadedUserDetails{
+	float:left;
+	margin-left: 5%;
+}
+.title{
+	margin-left: 40%;
+}
+
+@media screen and (max-width: 770px) {
+	#home{
+		margin: 0;
+		width: 100%;
+	}
+	.reminders, .covid-table{
+		margin: 0;
+		margin-left: 4px;
+	}
 }

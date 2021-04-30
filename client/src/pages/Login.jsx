@@ -59,14 +59,14 @@ const Login = (props) => {
 				</div>
 				<div className="login">
 					<div className="loginContainer">
-						<label>Email</label>
+						<label class='label'>Email</label>
 						<input
 							type="email"
 							onChange={(e) => {
 								onUpdate({ email: e.target.value });
 							}}
 						/>
-						<label>Password</label>
+						<label class='label'>Password</label>
 						<input
 							type="password"
 							onChange={(e) => {

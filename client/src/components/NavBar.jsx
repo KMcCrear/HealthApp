@@ -30,10 +30,9 @@ function NavBar(props) {
 						<a href="/home">Home</a>
 						<a href="/activities">Activities</a>
 						<a href="/profile">Profile</a>
-						<a href="/covidtracking">Covid-19</a>
 						{showAdmin}
 					</div>
-					;
+					
 					<button onClick={() => setShowLinks(!showLinks)}>
 						<ReorderIcon />
 					</button>

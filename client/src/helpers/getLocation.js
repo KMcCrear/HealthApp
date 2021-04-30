@@ -29,7 +29,7 @@ const getLocation = (setLocation, setError) => {
 		  );
 	}
 	const errorCallback = (msg)=>{
-        setError(msg)
+        setError(msg.message)
     }
     
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { timeout: 10000 });

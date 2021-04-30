@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import {Button} from "antd";
 import Axios from "axios";
 import endpoint from "../helpers/endPoint";
 import updateOnLogin from "../helpers/updateOnLogin";
@@ -18,7 +18,7 @@ export default function Profile(props) {
 	const [height, setHeight] = useState();
 
 	const [userDetails, setUserDetails] = useState();
-
+	
 	const data = {
 		id: state.id,
 		firstName: state.firstname,
@@ -68,7 +68,9 @@ export default function Profile(props) {
 			<div className="currentUserData" key={user.id}>
 				<fieldset>
 					<TextField
-						className="inputField"
+						InputProps={{
+								className: "inputField",
+						}}						
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -77,8 +79,11 @@ export default function Profile(props) {
 						defaultValue={state.firstname}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}						
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -87,8 +92,11 @@ export default function Profile(props) {
 						defaultValue={state.surname}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}							
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -97,8 +105,11 @@ export default function Profile(props) {
 						defaultValue={state.email}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}							
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -107,18 +118,24 @@ export default function Profile(props) {
 						defaultValue={user.age}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}	
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
-						label="Emergancy Contact"
+						label="Emergency Contact"
 						disabled={true}
 						defaultValue={user.contact}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}	
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -127,8 +144,11 @@ export default function Profile(props) {
 						defaultValue={user.gender}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}						
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -137,8 +157,11 @@ export default function Profile(props) {
 						defaultValue={user.bloodtype}
 					/>
 					<br />
+					<br />
 					<TextField
-						className="inputField"
+						InputProps={{
+							className: "inputField",
+						}}	
 						id="outlined-basic"
 						variant="outlined"
 						type="text"
@@ -154,11 +177,12 @@ export default function Profile(props) {
 	};
 
 	return (
+		<div class='page'>
 		<div className="profileContainer">
 			<div className="profile">
 				<div className="profHeader">
 					<header>
-						<h1>User Profile</h1>
+						<h1 class='title'>User Profile</h1>
 					</header>
 				</div>
 				<div className="loadedUserDetails">
@@ -169,7 +193,9 @@ export default function Profile(props) {
 					<h3>Update Details</h3>
 					<form>
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+							}}							
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
@@ -177,18 +203,23 @@ export default function Profile(props) {
 							onChange={(e) => onUpdate({ firstname: e.target.value })}
 						/>
 						<br />
+						<br />
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+							}}							
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
-							label="Surname Name"
+							label="Surname"
 							onChange={(e) => onUpdate({ surname: e.target.value })}
 						/>
 						<br />
-
+						<br />
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+							}}
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
@@ -197,17 +228,25 @@ export default function Profile(props) {
 							onChange={(e) => onUpdate({ email: e.target.value })}
 						/>
 						<br />
+						<br />
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+								min: 0
+							}}
 							id="outlined-basic"
 							variant="outlined"
+							min
 							type="number"
 							label="age"
 							onChange={(e) => setAge(e.target.value)}
 						/>
 						<br />
+						<br />
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+							}}							
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
@@ -215,8 +254,11 @@ export default function Profile(props) {
 							onChange={(e) => setHeight(e.target.value)}
 						/>
 						<br />
+						<br />
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+							}}							
 							id="outlined-basic"
 							variant="outlined"
 							type="text"
@@ -224,26 +266,31 @@ export default function Profile(props) {
 							onChange={(e) => setWeight(e.target.value)}
 						/>
 						<br />
+						<br />
 						<TextField
-							className="inputField"
+							InputProps={{
+								className: "inputField",
+							}}							
 							id="outlined-basic"
 							variant="outlined"
 							type="tel"
-							label="Emergancy Contact"
+							label="Emergency Contact"
 							defaultValue={contact}
 							onChange={(e) => setContact(e.target.value)}
 						/>
+						<br />
 						<br />
 						<NativeSelect
 							className="inputField"
 							id="genderSelect"
 							onChange={(e) => setGender(e.target.value)}
 						>
-							<option defaultValue=""></option>
+							<option defaultValue="">Select Gender</option>
 							<option>Male</option>
 							<option>Female</option>
 							<option>Other</option>
 						</NativeSelect>
+						<br />
 						<br />
 						<NativeSelect
 							className="inputField"
@@ -251,10 +298,11 @@ export default function Profile(props) {
 							label="Do You have a Disability?"
 							onChange={(e) => setDisability(e.target.value)}
 						>
-							<option defaultValue=""></option>
+							<option defaultValue="">Do you have a Disability</option>
 							<option>Yes</option>
 							<option>No</option>
 						</NativeSelect>
+						<br />
 						<br />
 						<NativeSelect
 							className="inputField"
@@ -262,7 +310,7 @@ export default function Profile(props) {
 							label="Blood Type"
 							onChange={(e) => setBloodType(e.target.value)}
 						>
-							<option defaultValue={bloodType}></option>
+							<option defaultValue={bloodType}>Select Blood Type</option>
 							<option>A+</option>
 							<option>A-</option>
 							<option>B+</option>
@@ -273,17 +321,19 @@ export default function Profile(props) {
 							<option>AB-</option>
 						</NativeSelect>
 						<br />
+						<br />
 						<NativeSelect
 							className="inputField"
 							id="diabetic Select"
 							label="Are you diabetic"
 							onChange={(e) => setDiabetic(e.target.value)}
 						>
-							<option defaultValue=""></option>
+							<option defaultValue="">Are you Diabetic?</option>
 							<option>Type-1</option>
 							<option>Type-2</option>
 							<option>No</option>
 						</NativeSelect>
+						<br />
 						<br />
 						<Button
 							id="submitButton"
@@ -296,6 +346,7 @@ export default function Profile(props) {
 					</form>
 				</div>
 			</div>
+		</div>
 		</div>
 	);
 }

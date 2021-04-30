@@ -70,33 +70,57 @@ app.post("/register", (req, res) => {
 		if (err) {
 			console.log(err);
 		}
+		db.query("select email from users",(err,result)=>{
+			const registeredEmails = [];
+			result.forEach((data)=>registeredEmails.push(data.email));
+			if(err){
+				res.send({message:"We encountered an error"});
+			}
+			if(registeredEmails.includes(email)){
+				res.send({message: "Account with this email already exists!"});
+			} else{
+				db.query(
+					"INSERT INTO users(firstname, surname, email, password) VALUES (? ,? ,? ,?)",
+					[firstname, surname, email, hash],
+					(err, result) => {
+						if (err) {
+							console.log(err);
+							res.send({ message: "Registration unsuccessful" });
+						} else {
+							req.session.user = result;
+							res.send(result);
+						}
+					}
+				);
+				db.query(
+					"INSERT INTO userdetails(userid) SELECT id FROM users WHERE NOT EXISTS(SELECT userid FROM userdetails WHERE userdetails.userid = users.id)",
+					(err, result) => {
+						if (err) {
+							console.log(err);
+						}
+					}
+				);
+			}
+		})
 
-		db.query(
-			"INSERT INTO users(firstname, surname, email, password) VALUES (? ,? ,? ,?)",
-			[firstname, surname, email, hash],
-			(err, result) => {
-				if (err) {
-					console.log(err);
-					res.send({ message: "Registration unsuccessful" });
-				} else {
-					req.session.user = result;
-					res.send(result);
-				}
-			}
-		);
-		db.query(
-			"INSERT INTO userdetails(userid) SELECT id FROM users WHERE NOT EXISTS(SELECT userid FROM userdetails WHERE userdetails.userid = users.id)",
-			(err, result) => {
-				if (err) {
-					console.log(err);
-				}
-			}
-		);
 	});
 });
 
 /*This is a GET method, checks to see if the use is logged in
 sends info on if the user is logged in to the front end.*/
+app.post("/resetField",(req,res)=>{
+	const table = req.body.table;
+	const field = req.body.field;
+	const id = req.body.id;
+	const idField = (table==='users') ? 'id' : 'userid';
+	db.query(`UPDATE ${table} SET ${field} = NULL where ${idField} = ${id};`,(err,result)=>{
+		if(err){
+			console.log('error ', err);
+		} else {
+			res.send(result);
+		}
+	})
+})
 
 app.get("/login", (req, res) => {
 	if (req.session.user) {
@@ -164,6 +188,7 @@ app.post("/home/reminders-add", (req, res) => {
 
 app.post("/home/reminders-delete", (req, res) => {
 	const id = req.body.id;
+	console.log('deleting from reminders with id ', id);
 	db.query(`DELETE FROM reminders where id = ${id}`, (err, result) => {
 		if (err) {
 			console.log(err);

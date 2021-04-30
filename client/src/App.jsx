@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
-import CovidTracker from "./pages/CovidTracker";
 import Axios from "axios";
 import _ from "lodash";
 import updateOnLogin from "./helpers/updateOnLogin";
@@ -72,7 +71,6 @@ const App = () => {
 					path="/register"
 					render={() => <Register state={state} onUpdate={onUpdate} />}
 				/>
-				<Route path="/covidtracking" render={() => <CovidTracker />} />
 				<Route
 					path="/activities"
 					render={() => <Activities state={state} onUpdate={onUpdate} />}

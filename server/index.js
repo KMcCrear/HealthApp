@@ -188,6 +188,7 @@ app.post("/home/reminders-add", (req, res) => {
 
 app.post("/home/reminders-delete", (req, res) => {
 	const id = req.body.id;
+	console.log('deleting from reminders with id ', id);
 	db.query(`DELETE FROM reminders where id = ${id}`, (err, result) => {
 		if (err) {
 			console.log(err);

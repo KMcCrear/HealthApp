@@ -6,25 +6,24 @@ async function getCovidData(location, setCovidData) {
         //'date=2021-03-20'
         `areaName=${location}`,
     ];
-    console.log('CALLING WITH LOCATION ', location)
+
     const structure = {
         date: "date",
         name: "areaName",
         dailyCases: "newCasesByPublishDate",
         cumulativeCases: "cumCasesByPublishDate",
         dailyDeaths: "newDeathsByDeathDate",
-        cumulativeDeaths: "cumDeathsByDeathDate",
-        
+        cumulativeDeaths: "cumDeathsByDeathDate",        
     };
 
     // 'https://api.coronavirus.data.gov.uk/v1/data?' +
     // 'filters=areaType=utla;areaName=Glasgow city&' +
     // 'structure={"date":"date","code":"areaCode","name":"areaName","newCases":"newCasesByPublishDate"}'
     const apiParams =`filters=${filters}&structure=${JSON.stringify(structure)}`
-    console.log(apiParams)
     const encodedParams = encodeURI(apiParams)
     const data = [];
     let firstTen = [];
+
     try{
         await fetch(
                 `https://api.coronavirus.data.gov.uk/v1/data?${encodedParams}`
@@ -36,7 +35,6 @@ async function getCovidData(location, setCovidData) {
                     }))
                     .then((res) => {
                         const dataArray = res.data.data;
-                        console.log('data is ', dataArray)
                         firstTen = dataArray.slice(0, 10);
                     })
             );
@@ -80,7 +78,8 @@ function getYesterdayDateFormatted() {
 }
 
 const getCovidAreas = async(setAllAreas)=>{
-   
+    //this returns all the areas with covid data available in the uk
+    
     const yesterdayDate = getYesterdayDateFormatted();
 
     let dataArray = []
